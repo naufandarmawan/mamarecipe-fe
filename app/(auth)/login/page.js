@@ -1,7 +1,7 @@
 import React from 'react'
-import Input from '@/components/base/Input'
+import Input from '@/components/base/input'
 import Button from '@/components/base/button'
-import Checkbox from '@/components/base/Checkbox'
+import Checkbox from '@/components/base/checkbox'
 import Link from 'next/link'
 
 
@@ -18,7 +18,7 @@ const Login = () => {
 
       <div className='w-1/2 flex flex-col justify-center items-center py-20'>
         <div className='w-1/2 flex flex-col gap-6'>
-          <h1 className='text-center font-bold text-3xl text-[#EFC81A]'>Welcome</h1>
+          <p className='text-center font-bold text-3xl text-[#EFC81A]'>Welcome</p>
           <p className='text-center font-normal text-lg text-[#8692A6]'>Log in into your exiting account</p>
 
           <div className='flex flex-col gap-4 w-full'>
