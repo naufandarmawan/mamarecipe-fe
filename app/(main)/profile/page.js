@@ -1,55 +1,37 @@
 import React from 'react'
 import Tabs from '@/components/base/tabs'
-import Collapse from '@/components/base/collapse'
 import Dropdown from '@/components/base/dropdown'
+import Link from 'next/link'
 
 const MyProfile = () => {
   return (
     <div>
-      <div>
-        <div className='flex flex-col'>
-          <img className='rounded-full size-44 bg-cover' src='/user-thumbnail.png' />
-          <img className='size-6' src='/edit.svg' />
+      <div className=' flex flex-col items-center justify-center p-24 pt-48'>
+
+        <div className='flex flex-col gap-10'>
+
+          <div className='flex items-end'>
+            <img className='rounded-full size-44 bg-cover -mr-6' src='/user-thumbnail.png' />
+
+            {/* <Dropdown /> */}
+
+            <div className="dropdown dropdown-end">
+              <img tabIndex={0} className='size-6' src='/edit.svg' />
+              <ul tabIndex={0} className="dropdown-content z-[1] menu my-4 p-2 shadow text-center rounded-box w-52 bg-[#E7E7E7]">
+                <li><a className='' href=''>Change Photo Profile</a></li>
+                <li><a className='' href=''>Change Password</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <p className='font-medium text-2xl text-black'>Garneta Sharina</p>
+
         </div>
-        <p className='font-medium text-2xl text-black'>Garneta Sharina</p>
+
       </div>
-
-      <Collapse />
-      <Dropdown />
-      <>Change Photo Profile</>
-      <>Change Password</>
-
-      <p className='font-medium text-2xl text-black'>My Recipe</p>
-      <p className='font-medium text-2xl text-[#666666]'>Saved Recipe</p>
-      <p className='font-medium text-2xl text-[#666666]'>Liked Recipe</p>
 
       <Tabs />
-
-      <div className='w-full h-[1px] bg-[#DFDFDF]'></div>
-
-      <div className='grid grid-cols-4 gap-8'>
-
-        <div className='w-full h-64 flex flex-col justify-end items-start p-6'>
-          <p className='w-1/2 font-medium text-3xl text-white'>Bomb Chicken</p>
-        </div>
-
-        <div className='w-full h-64 flex flex-col justify-end items-start p-6'>
-          <p className='w-1/2 font-medium text-3xl text-white'>Bomb Chicken</p>
-        </div>
-
-        <div className='w-full h-64 flex flex-col justify-end items-start p-6'>
-          <p className='w-1/2 font-medium text-3xl text-white'>Bomb Chicken</p>
-        </div>
-
-        <div className='w-full h-64 flex flex-col justify-end items-start p-6'>
-          <p className='w-1/2 font-medium text-3xl text-white'>Bomb Chicken</p>
-        </div>
-
-        <div className='w-full h-64 flex flex-col justify-end items-start p-6'>
-          <p className='w-1/2 font-medium text-3xl text-white'>Bomb Chicken</p>
-        </div>
-
-      </div>
+      
     </div>
   )
 }

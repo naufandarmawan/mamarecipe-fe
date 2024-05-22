@@ -8,7 +8,7 @@ import FileInput from '@/components/base/file-input'
 
 const AddRecipe = () => {
   return (
-    <div className='p-24'>
+    <div className='p-24 pt-48'>
       <div className='w-1/2 mx-auto flex flex-col gap-6 items-center'>
         <div className='flex flex-col gap-4 w-full'>
           <label className='w-full cursor-pointer p-20 bg-[#F6F5F4] rounded-lg border border-stone-300'>
