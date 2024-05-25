@@ -154,17 +154,19 @@ const Recipes = () => {
           <div className="skeleton w-full h-64"></div>
           <div className="skeleton w-full h-64"></div>
         </div>
-      ) : (
+      ) : recipe.length > 0 ? (
         <div className='grid grid-cols-3 gap-8'>
           {recipe.map((item) => (
             <Card
               key={item.id}
-              // image={item.image}
+              image={item.image}
               title={item.title}
               onClick={() => handleNavigate(item.id)}
             />
           ))}
         </div>
+      ) : (
+        <p>No recipes found.</p>
       )}
 
       <div className='flex flex-col items-center'>

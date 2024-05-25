@@ -1,14 +1,13 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '@/components/base/button'
 import Input from '@/components/base/input'
 import Textarea from '@/components/base/textarea'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 
-
-const AddRecipe = () => {
+const EditRecipe = ({ params }) => {
   const [form, setForm] = useState({
     image: '',
     title: '',
@@ -22,13 +21,54 @@ const AddRecipe = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter()
 
-  const handleAdd = async () => {
+  const getRecipeDetails = async () => {
+
     try {
 
       setLoading(true);
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes/`, {
-        method: 'POST',
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes/${params.id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        // throw new Error('Login failed');
+        setError('Get recipe details failed')
+        toast.error(error)
+        setLoading(false);
+        return
+      }
+
+      const res = await response.json();
+      setForm(res.data)
+
+      // toast.success(`Get recipes details success`)
+      // console.log(res.data);
+
+    } catch (err) {
+
+      setError(err.message);
+      toast.error(error)
+
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    getRecipeDetails()
+  }, [])
+
+  const handleUpdate = async () => {
+    try {
+
+      setLoading(true);
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes/${params.id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -37,7 +77,7 @@ const AddRecipe = () => {
 
       if (!response.ok) {
         // throw new Error('Login failed');
-        setError('Add recipe failed')
+        setError('Update recipe failed')
         toast.error(error)
         setLoading(false);
         return
@@ -45,7 +85,7 @@ const AddRecipe = () => {
 
       const res = await response.json();
 
-      toast.success(`Add recipe success`)
+      toast.success(`Update recipe success`)
       router.push(`/recipes/${res.data.id}`)
 
 
@@ -120,7 +160,7 @@ const AddRecipe = () => {
           /> */}
         </div>
 
-        <Button text="Post" onClick={handleAdd} className={'w-1/3'} loading={loading} />
+        <Button text="Post" onClick={handleUpdate} className={'w-1/3'} loading={loading} />
 
       </div>
 
@@ -128,4 +168,4 @@ const AddRecipe = () => {
   )
 }
 
-export default AddRecipe
+export default EditRecipe

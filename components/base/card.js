@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Card = ({image = `url('/recipe-thumbnail.png')`, title = 'Title', ...props}) => {
+const Card = ({image, title = 'Title', ...props}) => {
     return (
         <div {...props} className='w-full h-64 flex flex-col justify-end items-start p-6 rounded-xl bg-cover cursor-pointer' style={{
-            backgroundImage: image
+            backgroundImage: `url('${image || "/recipe-thumbnail.png"}')`
         }}>
             <p className='w-1/2 font-medium text-3xl text-white'>{title}</p>
         </div>

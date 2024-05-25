@@ -4,15 +4,16 @@ import React, { useEffect, useState } from 'react'
 import Textarea from '@/components/base/textarea'
 import Button from '@/components/base/button'
 import { toast } from 'sonner'
-
+import { useRouter } from 'next/navigation'
 
 
 const RecipeDetails = ({ params }) => {
-  const [recipeDetails, setRecipeDetails] = useState({})
+  const [recipeDetails, setRecipeDetails] = useState([])
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
+  const router = useRouter()
 
   const getRecipeDetails = async () => {
 
@@ -38,8 +39,8 @@ const RecipeDetails = ({ params }) => {
       const res = await response.json();
       setRecipeDetails(res.data)
 
-      toast.success(`Get recipes details success`)
-      console.log(res.data);
+      // toast.success(`Get recipes details success`)
+      // console.log(res.data);
 
     } catch (err) {
 
@@ -64,6 +65,47 @@ const RecipeDetails = ({ params }) => {
     setSaved(!saved);
   }
 
+  const handleUpdate = () => {
+    router.push(`/recipes/edit/${params.id}`)
+  }
+
+  const handleDelete = async () => {
+    try {
+
+      setLoading(true);
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes/${params.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        // throw new Error('Login failed');
+        setError('Delete recipe failed')
+        toast.error(error)
+        setLoading(false);
+        return
+      }
+
+      const res = await response.json();
+      setRecipeDetails(res.data)
+
+      toast.success(`Delete recipe success`)
+      console.log(res.data);
+      router.push('/recipes')
+
+    } catch (err) {
+
+      setError(err.message);
+      toast.error(error)
+
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className='p-24 pt-48'>
       <div className='w-1/2 mx-auto flex flex-col gap-16 items-center'>
@@ -75,7 +117,7 @@ const RecipeDetails = ({ params }) => {
         )}
 
         <div className='w-full bg-cover flex justify-end items-end h-96 p-4 rounded-2xl gap-2' style={{
-          backgroundImage: `url(${recipeDetails.photo || '/recipe-thumbnail.png'})`
+          backgroundImage: `url(${recipeDetails.image || '/recipe-thumbnail.png'})`
         }}>
 
           <button
@@ -119,29 +161,44 @@ const RecipeDetails = ({ params }) => {
         </div>
 
         <div className='w-full flex flex-col gap-8'>
-          <p className='font-medium text-2xl text-[#3F3A3A]'>Ingredients</p>
+          <p className='font-medium text-2xl text-[#3F3A3A]'>Ingridients</p>
+          {loading ? (
+            <div className="skeleton w-full h-20"></div>
+          ) : (
+            <div>
+              {recipeDetails.description ? (
+                recipeDetails.description.split('\n').map((line, index) => (
+                  <p key={index} className='font-normal text-xl text-black'>
+                    - {line}
+                  </p>
+                ))
+              ) : (
+                <p className='font-normal text-xl text-black'>Description</p>
+              )}
+            </div>
+            // <p className='font-normal text-xl text-black'>
+            //   {recipeDetails.description || "Description"}
+            // </p>
+          )}
+
+        </div>
+
+        <div className='w-full flex flex-col gap-8'>
+          <p className='font-medium text-2xl text-[#3F3A3A]'>Step-by-step</p>
           <p className='font-normal text-xl text-black'>
             - 2 eggs <br />
             - 2 tbsp mayonnaise <br />
             - 3 slices bread <br />
             - a little butter <br />
             - ⅓ carton of cress <br />
-            - 2-3 slices of tomato or a lettuce leaf <br />
-            and a slice of ham or cheese <br />
+            - 2-3 slices of tomato or a lettuce leaf and a slice of ham or cheese <br />
             - crisps , to serve <br />
           </p>
         </div>
 
-        <div className='w-full flex flex-col gap-8'>
-          <p className='font-medium text-2xl text-[#3F3A3A]'>Step-by-step</p>
-          {loading ? (
-            <div className="skeleton w-full h-20"></div>
-          ) : (
-            <p className='font-normal text-xl text-black'>
-              {recipeDetails.description || "Description"}
-            </p>
-          )}
-
+        <div className='flex gap-2 w-full'>
+          <Button text="Edit" className='btn btn-outline btn-info bg-transparent' onClick={handleUpdate} />
+          <Button text="Delete" className='btn btn-outline btn-error bg-transparent' onClick={handleDelete} loading={loading} />
         </div>
 
         <div className='w-full flex flex-col gap-4 items-center'>
