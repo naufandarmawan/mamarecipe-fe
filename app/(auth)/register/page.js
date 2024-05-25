@@ -7,6 +7,8 @@ import Checkbox from '@/components/base/checkbox'
 import Link from 'next/link'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../../../redux/authSlice';
 
 const Register = () => {
 
@@ -16,12 +18,56 @@ const Register = () => {
     phone: '',
     password: '',
     confirmPassword: '',
-  })
+  });
 
   const [termsChecked, setTermsChecked] = useState(false);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const router = useRouter()
+  const dispatch = useDispatch();
+  const { loading, error, user } = useSelector((state) => state.auth);
+  const router = useRouter();
+
+  const handleChange = (fieldName, value) => {
+    setForm((prevState) => ({
+      ...prevState,
+      [fieldName]: value,
+    }));
+  };
+
+  const handleCheckboxChange = (e) => {
+    setTermsChecked(e.target.checked);
+  };
+
+  const handleRegister = () => {
+    if (form.password !== form.confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
+    if (!termsChecked) {
+      toast.error('Please agree to terms & conditions');
+      return;
+    }
+    dispatch(registerUser(form))
+      .unwrap()
+      .then((res) => {
+        toast.success(res.message);
+        router.push('/login');
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
+
+  // const [form, setForm] = useState({
+  //   name: '',
+  //   email: '',
+  //   phone: '',
+  //   password: '',
+  //   confirmPassword: '',
+  // })
+
+  // const [termsChecked, setTermsChecked] = useState(false);
+  // const [error, setError] = useState('');
+  // const [loading, setLoading] = useState(false);
+  // const router = useRouter()
 
   const validateName = (value) => {
     if (!value) {
@@ -73,68 +119,68 @@ const Register = () => {
     return '';
   };
 
-  const handleChange = (fieldName, value) => {
-    setForm(prevState => ({
-      ...prevState,
-      [fieldName]: value
-    }));
-  }
+  // const handleChange = (fieldName, value) => {
+  //   setForm(prevState => ({
+  //     ...prevState,
+  //     [fieldName]: value
+  //   }));
+  // }
 
-  const handleCheckboxChange = (e) => {
-    setTermsChecked(e.target.checked);
-  };
+  // const handleCheckboxChange = (e) => {
+  //   setTermsChecked(e.target.checked);
+  // };
 
-  const handleRegister = async () => {
-    try {
+  // const handleRegister = async () => {
+  //   try {
 
-      if (form.password !== form.confirmPassword) {
-        setError('Passwords do not match');
-        toast.error(error)
-        return
-      }
+  //     if (form.password !== form.confirmPassword) {
+  //       setError('Passwords do not match');
+  //       toast.error(error)
+  //       return
+  //     }
 
-      if (!termsChecked) {
-        // throw new Error('Please agree to terms & conditions');
-        setError('Please agree to terms & conditions');
-        toast.error(error)
-        return
-      }
+  //     if (!termsChecked) {
+  //       // throw new Error('Please agree to terms & conditions');
+  //       setError('Please agree to terms & conditions');
+  //       toast.error(error)
+  //       return
+  //     }
 
-      const { confirmPassword, ...dataToSend } = form;
+  //     const { confirmPassword, ...dataToSend } = form;
 
-      setLoading(true);
+  //     setLoading(true);
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(dataToSend)
-      });
+  //     const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/auth/register`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify(dataToSend)
+  //     });
 
-      if (!response.ok) {
-        // throw new Error('Registration failed');
-        setError('Registration failed')
-        toast.error(error)
-        setLoading(false);
-        return
-      }
+  //     if (!response.ok) {
+  //       // throw new Error('Registration failed');
+  //       setError('Registration failed')
+  //       toast.error(error)
+  //       setLoading(false);
+  //       return
+  //     }
 
-      const res = await response.json();
+  //     const res = await response.json();
 
-      toast.success(`${res.message}`)
-      console.log(res.data);
-      router.push('/login')
+  //     toast.success(`${res.message}`)
+  //     console.log(res.data);
+  //     router.push('/login')
 
-    } catch (err) {
+  //   } catch (err) {
 
-      setError(err.message);
-      toast.error(error)
+  //     setError(err.message);
+  //     toast.error(error)
 
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <div className='flex'>

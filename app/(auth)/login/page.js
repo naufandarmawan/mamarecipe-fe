@@ -7,17 +7,57 @@ import Checkbox from '@/components/base/checkbox'
 import Link from 'next/link'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../../redux/authSlice';
 
 const Login = () => {
 
   const [form, setForm] = useState({
     email: '',
     password: '',
-  })
+  });
   const [termsChecked, setTermsChecked] = useState(false);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const router = useRouter()
+  const { loading, error, user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleChange = (fieldName, value) => {
+    setForm((prevState) => ({
+      ...prevState,
+      [fieldName]: value,
+    }));
+  };
+
+  const handleCheckboxChange = (e) => {
+    setTermsChecked(e.target.checked);
+  };
+
+  const handleLogin = () => {
+    if (!termsChecked) {
+      toast.error('Please agree to terms & conditions');
+      return;
+    }
+    dispatch(loginUser(form))
+      .unwrap()
+      .then((res) => {
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('refreshToken', res.data.refreshToken);
+        toast.success(`Welcome ${res.data.name}`);
+        router.push('/');
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
+
+  // const [form, setForm] = useState({
+  //   email: '',
+  //   password: '',
+  // })
+  // const [termsChecked, setTermsChecked] = useState(false);
+  // const [error, setError] = useState('');
+  // const [loading, setLoading] = useState(false);
+  // const router = useRouter()
 
   const validateEmail = (value) => {
     if (!value) {
@@ -39,65 +79,65 @@ const Login = () => {
     return '';
   };
 
-  const handleChange = (fieldName, value) => {
-    setForm(prevState => ({
-      ...prevState,
-      [fieldName]: value
-    }));
-  }
+  // const handleChange = (fieldName, value) => {
+  //   setForm(prevState => ({
+  //     ...prevState,
+  //     [fieldName]: value
+  //   }));
+  // }
 
-  const handleCheckboxChange = (e) => {
-    setTermsChecked(e.target.checked);
-  };
+  // const handleCheckboxChange = (e) => {
+  //   setTermsChecked(e.target.checked);
+  // };
 
-  const handleLogin = async () => {
-    try {
+  // const handleLogin = async () => {
+  //   try {
 
-      if (!termsChecked) {
-        // throw new Error('Please agree to terms & conditions');
-        setError('Please agree to terms & conditions');
-        toast.error(error)
-        return
-      }
+  //     if (!termsChecked) {
+  //       // throw new Error('Please agree to terms & conditions');
+  //       setError('Please agree to terms & conditions');
+  //       toast.error(error)
+  //       return
+  //     }
 
-      setLoading(true);
+  //     setLoading(true);
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(form)
-      });
+  //     const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/auth/login`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify(form)
+  //     });
 
-      if (!response.ok) {
-        // throw new Error('Login failed');
-        setError('Login failed')
-        toast.error(error)
-        setLoading(false);
-        return
-      }
+  //     if (!response.ok) {
+  //       // throw new Error('Login failed');
+  //       setError('Login failed')
+  //       toast.error(error)
+  //       setLoading(false);
+  //       return
+  //     }
 
-      const res = await response.json();
+  //     const res = await response.json();
 
-      const { token, refreshToken } = res.data
-      localStorage.setItem('token', token)
-      localStorage.setItem('refreshToken', refreshToken)
+  //     const { token, refreshToken } = res.data
+  //     localStorage.setItem('token', token)
+  //     localStorage.setItem('refreshToken', refreshToken)
 
-      toast.success(`${res.message} - Welcome ${res.data.name}`)
-      console.log(res.data);
-      router.push('/')
+  //     toast.success(`${res.message} - Welcome ${res.data.name}`)
+  //     console.log(res.data);
+  //     router.push('/')
 
 
-    } catch (err) {
+  //   } catch (err) {
 
-      setError(err.message);
-      toast.error(error)
+  //     setError(err.message);
+  //     toast.error(error)
 
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
 
 

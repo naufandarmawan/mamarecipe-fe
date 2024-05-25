@@ -52,7 +52,7 @@ const Navbar = () => {
                 //     <p className='font-medium text-sm text-slate-800'>Loading</p>
                 // </div>
             ) : isLoggedIn ? (
-                <Button text="Log out" className='bg-red-600 hover:bg-red-700 border-red-700 hover:border-red-800' onClick={handleLogout} />
+                <Button text="Log out" className='bg-red-700 hover:bg-red-800 border-red-800 hover:border-red-900' onClick={handleLogout} />
             ) : (
 
                 // <Link className='flex items-center gap-2' href={'/login'}>

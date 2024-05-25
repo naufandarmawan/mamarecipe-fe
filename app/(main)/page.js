@@ -1,9 +1,79 @@
-import React from 'react'
+"use client"
+
+import React, { useEffect, useState } from 'react'
 import Card from '@/components/base/card'
 import Button from '@/components/base/button'
 import Input from '@/components/base/input'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 const Home = () => {
+
+  const [recipe, setRecipe] = useState([])
+  const [params, setParams] = useState({
+    limit: 6,
+    page: 1,
+  })
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const getRecipe = async () => {
+
+    try {
+
+      setLoading(true);
+
+      const queryParams = new URLSearchParams({
+        limit: params.limit,
+        page: params.page,
+      });
+
+      const url = `${process.env.NEXT_PUBLIC_API}/v1/recipes?${queryParams.toString()}`;
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        // throw new Error('Login failed');
+        setError('Get recipes failed')
+        toast.error(error)
+        setLoading(false);
+        return
+      }
+
+      const res = await response.json();
+      setRecipe(res.data)
+
+      toast.success(`Get recipes success`)
+      console.log(res.data);
+
+
+    } catch (err) {
+
+      setError(err.message);
+      toast.error(error)
+
+    } finally {
+      setLoading(false);
+    }
+
+  }
+
+  useEffect(() => {
+    // getTalent()
+    getRecipe()
+  }, [])
+
+  const router = useRouter()
+  const handleNavigate = (id) => {
+    router.push(`/recipes/${id}`)
+
+  }
+
   return (
     <div className='flex flex-col gap-32'>
 
@@ -103,16 +173,28 @@ const Home = () => {
           <p className='font-medium text-5xl text-[#3F3A3A]'>Popular Recipe</p>
         </div>
 
-        <div className='grid grid-cols-3 gap-8 px-24'>
+        {/* <div className='grid grid-cols-3 gap-8 px-24'> */}
 
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+        {loading ? (
+          <div className='grid grid-cols-3 gap-8 px-24'>
+            <div className="skeleton w-full h-64"></div>
+            <div className="skeleton w-full h-64"></div>
+            <div className="skeleton w-full h-64"></div>
+          </div>
+        ) : (
+          <div className='grid grid-cols-3 gap-8 px-24'>
+            {recipe.map((item) => (
+              <Card
+                key={item.id}
+                image={item.image}
+                title={item.title}
+                onClick={() => handleNavigate(item.id)}
+              />
+            ))}
+          </div>
+        )}
 
-        </div>
+        {/* </div> */}
 
       </section>
 
