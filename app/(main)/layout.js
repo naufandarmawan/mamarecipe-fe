@@ -18,8 +18,8 @@ export default function RootLayout({ children }) {
         <Navbar />
         {children}
         <Footer />
+        <Toaster richColors position="top-center" />
       </body>
-      <Toaster richColors position="top-center" />
     </html>
   );
 }

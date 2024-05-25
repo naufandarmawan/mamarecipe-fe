@@ -62,8 +62,6 @@ const Login = () => {
 
       setLoading(true);
 
-      console.log(form);
-
       const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/auth/login`, {
         method: 'POST',
         headers: {
@@ -88,7 +86,7 @@ const Login = () => {
 
       toast.success(`${res.message} - Welcome ${res.data.name}`)
       console.log(res.data);
-      // router.push('/')
+      router.push('/')
 
 
     } catch (err) {

@@ -12,8 +12,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body className={inter.className}>{children}</body>
-            <Toaster richColors position="top-center" />
+            <body className={inter.className}>
+                {children}
+                <Toaster richColors position="top-center" />
+            </body>
+            {/* <Toaster richColors position="top-center" /> */}
         </html>
     )
 }

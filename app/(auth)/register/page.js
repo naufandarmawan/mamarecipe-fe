@@ -5,7 +5,8 @@ import Input from '@/components/base/input'
 import Button from '@/components/base/button'
 import Checkbox from '@/components/base/checkbox'
 import Link from 'next/link'
-
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 const Register = () => {
 
@@ -18,14 +19,65 @@ const Register = () => {
   })
 
   const [termsChecked, setTermsChecked] = useState(false);
-
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const router = useRouter()
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value
-    })
+  const validateName = (value) => {
+    if (!value) {
+      return 'Name is required';
+    }
+    if (value.length < 4) {
+      return 'Name must be at least 4 characters';
+    }
+    return '';
+  };
+
+  const validateEmail = (value) => {
+    if (!value) {
+      return 'Email is required';
+    }
+    if (!/\S+@\S+\.\S+/.test(value)) {
+      return 'Invalid email address';
+    }
+    return '';
+  };
+
+  const validatePhone = (value) => {
+    if (!value) {
+      return 'Phone number is required';
+    }
+    if (!/^\d{10,15}$/.test(value)) {
+      return 'Invalid phone number';
+    }
+    return '';
+  };
+
+  const validatePassword = (value) => {
+    if (!value) {
+      return 'Password is required';
+    }
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters';
+    }
+    return '';
+  };
+
+  const validateConfirmPassword = (value) => {
+    if (!value) {
+      return 'Confirmation password is required';
+    }
+    if (value !== form.password) {
+      return 'Passwords do not match';
+    }
+    return '';
+  };
+
+  const handleChange = (fieldName, value) => {
+    setForm(prevState => ({
+      ...prevState,
+      [fieldName]: value
+    }));
   }
 
   const handleCheckboxChange = (e) => {
@@ -34,17 +86,25 @@ const Register = () => {
 
   const handleRegister = async () => {
     try {
+
       if (form.password !== form.confirmPassword) {
-        throw new Error('Passwords do not match');
+        setError('Passwords do not match');
+        toast.error(error)
+        return
       }
 
       if (!termsChecked) {
-        throw new Error('Please agree to terms & conditions');
+        // throw new Error('Please agree to terms & conditions');
+        setError('Please agree to terms & conditions');
+        toast.error(error)
+        return
       }
 
       const { confirmPassword, ...dataToSend } = form;
 
-      const response = await fetch(`https://pijar-mama-recipe.vercel.app/v1/auth/register`, {
+      setLoading(true);
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -53,17 +113,26 @@ const Register = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Registration failed');
+        // throw new Error('Registration failed');
+        setError('Registration failed')
+        toast.error(error)
+        setLoading(false);
+        return
       }
 
-      console.log("Register success");
+      const res = await response.json();
 
-      // Registration successful, redirect or handle success
+      toast.success(`${res.message}`)
+      console.log(res.data);
+      router.push('/login')
+
     } catch (err) {
-      console.log(err.response);
-      const error = err.response.data
-      alert(`Register failed - ${error.message}`)
-      // setError(error.message);
+
+      setError(err.message);
+      toast.error(error)
+
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -85,48 +154,53 @@ const Register = () => {
             <Input
               type='text'
               value={form.name}
-              onChange={handleChange}
+              onChange={(value) => handleChange('name', value)}
               name="name"
               label='Name'
               placeholder='Name'
+              validations={{ name: validateName }}
             />
             <Input
               type='email'
               value={form.email}
-              onChange={handleChange}
+              onChange={(value) => handleChange('email', value)}
               name="email"
               label='Email'
               placeholder='Enter email address'
+              validations={{ email: validateEmail }}
             />
             <Input
               type='tel'
               value={form.phone}
-              onChange={handleChange}
+              onChange={(value) => handleChange('phone', value)}
               name="phone"
               label='Phone Number'
               placeholder='08xxxxxxxxxx'
+              validations={{ phone: validatePhone }}
             />
             <Input
               type='password'
               value={form.password}
-              onChange={handleChange}
+              onChange={(value) => handleChange('password', value)}
               name="password"
               label='Create New Password'
               placeholder='Create New Password'
+              validations={{ password: validatePassword }}
             />
             <Input
               type='password'
               value={form.confirmPassword}
-              onChange={handleChange}
+              onChange={(value) => handleChange('confirmPassword', value)}
               name="confirmPassword"
               label='New Password'
               placeholder='New Password'
+              validations={{ confirmPassword: validateConfirmPassword }}
             />
             <Checkbox label="I agree to terms & conditions" checked={termsChecked} onChange={handleCheckboxChange} />
           </div>
 
           <div className='flex flex-col gap-4 items-end'>
-            <Button text="Register Account" onClick={handleRegister} className={'w-full'} />
+            <Button text="Register Account" onClick={handleRegister} className={'w-full'} loading={loading} />
           </div>
 
           <p className='text-center text-sm font-medium text-[#999999]'>Already have account? <Link className='text-[#EFC81A]' href="/login">Log in Here</Link></p>
