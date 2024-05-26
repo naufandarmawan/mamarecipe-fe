@@ -3,12 +3,14 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Button from '@/components/base/button'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+
 
 const Navbar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter()
+    const pathname = usePathname();
 
 
     useEffect(() => {
@@ -33,26 +35,70 @@ const Navbar = () => {
     return (
         <div className='fixed flex p-6 px-24 w-full max-lg:justify-between max-lg:px-4 max-lg:z-[100]'>
 
-            <div class="navbar-start hidden max-lg:block max-lg:w-fit">
-                <div class="dropdown">
-                    <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
+            <div className="navbar-start hidden max-lg:block max-lg:w-fit">
+                <div className="dropdown">
+                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
                     </div>
-                    <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[100] z- p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><a href='/' className='active font-medium text-lg text-[#2E266F]'>Home</a></li>
-                        <li><a href='/recipes' className='font-medium text-lg text-[#2E266F]'>Recipes</a></li>
-                        <li><a href='/add' className=' font-medium text-lg text-[#2E266F]'>Add Recipe</a></li>
-                        <li><a href='/profile' className=' font-medium text-lg text-[#2E266F]'>Profile</a></li>
+                    <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                        <li>
+                            <a href='/' className={pathname === "/" ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Home</a>
+                        </li>
+                        <li>
+                            <a href='/recipes' className={pathname === "/recipes" ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Recipes</a>
+                        </li>
+                        <li>
+                            <a href='/add' className={pathname === "/add" ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Add Recipe</a>
+                        </li>
+                        <li>
+                            <a href='/profile' className={pathname === "/profile" ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Profile</a>
+                        </li>
                     </ul>
                 </div>
             </div>
 
+            {/* <div className="navbar-start hidden max-lg:block max-lg:w-fit">
+                <div className="dropdown">
+                    <div tabindex="0" role="button" className="btn btn-ghost btn-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
+                    </div>
+                    <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[100] z- p-2 shadow bg-base-100 rounded-box w-52">
+                        <li>
+                            <a href='/' className='font-medium text-lg text-[#2E266F]'>Home</a>
+                        </li>
+                        <li>
+                            <a href='/recipes' className='font-medium text-lg text-[#2E266F]'>Recipes</a>
+                        </li>
+                        <li>
+                            <a href='/add' className=' font-medium text-lg text-[#2E266F]'>Add Recipe</a>
+                        </li>
+                        <li>
+                            <a href='/profile' className=' font-medium text-lg text-[#2E266F]'>Profile</a>
+                        </li>
+                    </ul>
+                </div>
+            </div> */}
+
             <div className='w-full max-lg:w-fit max-lg:hidden'>
                 <ul className="menu menu-vertical lg:menu-horizontal p-0 gap-4">
-                    <li><a href='/' className='active font-medium text-lg text-[#2E266F]'>Home</a></li>
-                    <li><a href='/recipes' className='font-medium text-lg text-[#2E266F]'>Recipes</a></li>
-                    <li><a href='/add' className=' font-medium text-lg text-[#2E266F]'>Add Recipe</a></li>
-                    <li><a href='/profile' className=' font-medium text-lg text-[#2E266F]'>Profile</a></li>
+                    <li>
+                        <a href='/' className={pathname === '/' ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-lg text-[#2E266F] text-opacity-80'}>
+                            Home
+                            </a>
+                        <div className={pathname === '/' ? 'w-full h-1 !p-0 bg-[#2E266F]' : 'hidden'}></div>
+                    </li>
+                    <li>
+                        <a href='/recipes' className={pathname === '/recipes' ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-lg text-[#2E266F] text-opacity-80'}>Recipes</a>
+                        <div className={pathname === '/recipes' ? 'w-full h-1 !p-0 bg-[#2E266F]' : 'hidden'}></div>
+                    </li>
+                    <li>
+                        <a href='/add' className={pathname === '/add' ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-lg text-[#2E266F] text-opacity-80'}>Add Recipe</a>
+                        <div className={pathname === '/add' ? 'w-full h-1 !p-0 bg-[#2E266F]' : 'hidden'}></div>
+                    </li>
+                    <li>
+                        <a href='/profile' className={pathname === '/profile' ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-lg text-[#2E266F] text-opacity-80'}>Profile</a>
+                        <div className={pathname === '/profile' ? 'w-full h-1 !p-0 bg-[#2E266F]' : 'hidden'}></div>
+                    </li>
                 </ul>
             </div>
 
