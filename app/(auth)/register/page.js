@@ -183,16 +183,16 @@ const Register = () => {
   // };
 
   return (
-    <div className='flex'>
+    <div className='flex max-lg:flex-col'>
 
-      <div className='w-1/2 flex flex-col justify-center items-center bg-cover' style={{
+      <div className='w-1/2 flex flex-col justify-center items-center bg-cover max-lg:invisible max-lg:h-0' style={{
         backgroundImage: `url('/auth-background.png')`
       }}>
         <img className='w-32' src='/logo.svg' />
       </div>
 
-      <div className='w-1/2 flex flex-col justify-center items-center py-20'>
-        <div className='w-1/2 flex flex-col gap-6'>
+      <div className='w-1/2 flex flex-col justify-center items-center py-20 max-lg:w-full max-lg:p-4 max-lg:py-10'>
+        <div className='w-1/2 flex flex-col gap-6 max-lg:w-full'>
           <p className='text-center font-bold text-3xl text-[#EFC81A]'>Let’s Get Started!</p>
           <p className='text-center font-normal text-lg text-[#8692A6]'>Create new account to access all features</p>
 

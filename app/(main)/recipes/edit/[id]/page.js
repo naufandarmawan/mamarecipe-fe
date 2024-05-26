@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 
 const EditRecipe = ({ params }) => {
+  const [recipe, setRecipe] = useState({})
   const [form, setForm] = useState({
     image: '',
     title: '',
@@ -44,6 +45,7 @@ const EditRecipe = ({ params }) => {
 
       const res = await response.json();
       setForm(res.data)
+      setRecipe(res.data)
 
       // toast.success(`Get recipes details success`)
       // console.log(res.data);
@@ -107,9 +109,17 @@ const EditRecipe = ({ params }) => {
   }
 
   return (
-    <div className='p-24 pt-48'>
+    <div className='p-24 pt-48 max-lg:p-4 max-lg:pt-32'>
 
-      <div className='w-1/2 mx-auto flex flex-col gap-6 items-center'>
+      <div className='w-1/2 mx-auto flex flex-col gap-6 items-center max-lg:w-full'>
+
+        <div className='flex gap-6 items-center w-full'>
+          <div className='w-6 h-24 bg-yellow-400 max-lg:w-5 max-lg:h-20' />
+          <div className='flex flex-col gap-2'>
+          <p className='font-medium text-5xl text-[#3F3A3A] max-lg:text-3xl'>Edit Recipe</p>
+          <p className='font-medium text-xl text-[#3F3A3A]'>{recipe.title}</p>
+          </div>
+        </div>
 
         <div className='flex flex-col gap-4 w-full'>
 
@@ -160,7 +170,7 @@ const EditRecipe = ({ params }) => {
           /> */}
         </div>
 
-        <Button text="Post" onClick={handleUpdate} className={'w-1/3'} loading={loading} />
+        <Button text="Post" onClick={handleUpdate} className={'w-1/3 max-lg:w-1/2'} loading={loading} />
 
       </div>
 

@@ -5,7 +5,7 @@ const Card = ({image, title = 'Title', ...props}) => {
         <div {...props} className='w-full h-64 flex flex-col justify-end items-start p-6 rounded-xl bg-cover cursor-pointer' style={{
             backgroundImage: `url('${image || "/recipe-thumbnail.png"}')`
         }}>
-            <p className='w-1/2 font-medium text-3xl text-white'>{title}</p>
+            <p className='w-full font-medium text-3xl text-white'>{title}</p>
         </div>
     )
 }

@@ -126,11 +126,11 @@ const Recipes = () => {
   // };
 
   return (
-    <div className='flex flex-col gap-16 p-24 pt-48'>
+    <div className='flex flex-col gap-16 p-24 pt-48 max-lg:p-4 max-lg:pt-32 max-lg:gap-6'>
 
       <div className='flex gap-6 items-center'>
-        <div className='w-6 h-24 bg-yellow-400' />
-        <p className='font-medium text-5xl text-[#3F3A3A]'>All Recipe</p>
+        <div className='w-6 h-24 bg-yellow-400 max-lg:w-5 max-lg:h-16' />
+        <p className='font-medium text-5xl text-[#3F3A3A] max-lg:text-3xl'>All Recipe</p>
       </div>
 
       <div className="join">
@@ -149,13 +149,13 @@ const Recipes = () => {
       </div>
 
       {loading ? (
-        <div className='grid grid-cols-3 gap-8'>
+        <div className='grid grid-cols-3 gap-8 max-lg:grid-cols-1 max-lg:px-4'>
           <div className="skeleton w-full h-64"></div>
           <div className="skeleton w-full h-64"></div>
           <div className="skeleton w-full h-64"></div>
         </div>
       ) : recipe.length > 0 ? (
-        <div className='grid grid-cols-3 gap-8'>
+        <div className='grid grid-cols-3 gap-8 max-lg:grid-cols-1'>
           {recipe.map((item) => (
             <Card
               key={item.id}

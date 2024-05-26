@@ -12,7 +12,7 @@ const MyProfile = () => {
 
   const [recipe, setRecipe] = useState([])
   const [params, setParams] = useState({
-    limit: 8,
+    limit: 80,
     page: 1,
   })
 
@@ -55,8 +55,8 @@ const MyProfile = () => {
       const res = await response.json();
       setRecipe(res.data)
 
-      toast.success(`Get recipes success`)
-      console.log(res.data);
+      // toast.success(`Get recipes success`)
+      // console.log(res.data);
 
 
     } catch (err) {
@@ -83,7 +83,7 @@ const MyProfile = () => {
 
   return (
     <div>
-      <div className=' flex flex-col items-center justify-center p-24 pt-48'>
+      <div className=' flex flex-col items-center justify-center p-24 pt-48 max-lg:p-4 max-lg:pt-32'>
 
         <div className='flex flex-col gap-10'>
 
@@ -101,7 +101,7 @@ const MyProfile = () => {
             </div>
           </div>
 
-          <p className='font-medium text-2xl text-black'>Garneta Sharina</p>
+          <p className='font-medium text-2xl text-black text-center'>Garneta Sharina</p>
 
         </div>
 
@@ -109,25 +109,25 @@ const MyProfile = () => {
 
       {/* <Tabs /> */}
 
-      <div className='flex flex-col gap-8 py-24'>
-        <div role="tablist" className="tabs w-fit px-24">
+      <div className='flex flex-col gap-8 py-24 max-lg:py-8'>
+        <div role="tablist" className="tabs w-fit px-24 max-lg:px-4">
           <a
             role="tab"
-            className={`tab font-medium text-2xl ${activeTab === 'My Recipe' ? 'text-black tab-active' : 'text-[#666666]'}`}
+            className={`tab font-medium text-2xl max-lg:text-xl ${activeTab === 'My Recipe' ? 'text-black tab-active' : 'text-[#666666]'}`}
             onClick={() => handleTabClick('My Recipe')}
           >
             My Recipe
           </a>
           <a
             role="tab"
-            className={`tab font-medium text-2xl ${activeTab === 'Saved Recipe' ? 'text-black tab-active' : 'text-[#666666]'}`}
+            className={`tab font-medium text-2xl max-lg:text-xl ${activeTab === 'Saved Recipe' ? 'text-black tab-active' : 'text-[#666666]'}`}
             onClick={() => handleTabClick('Saved Recipe')}
           >
             Saved Recipe
           </a>
           <a
             role="tab"
-            className={`tab font-medium text-2xl ${activeTab === 'Liked Recipe' ? 'text-black tab-active' : 'text-[#666666]'}`}
+            className={`tab font-medium text-2xl max-lg:text-xl ${activeTab === 'Liked Recipe' ? 'text-black tab-active' : 'text-[#666666]'}`}
             onClick={() => handleTabClick('Liked Recipe')}
           >
             Liked Recipe
@@ -137,7 +137,7 @@ const MyProfile = () => {
         <div className='w-full h-[1px] bg-[#DFDFDF]'></div>
 
         {activeTab === 'My Recipe' && (
-          <div className='grid grid-cols-4 gap-8 px-24'>
+          <div className='grid grid-cols-4 gap-8 px-24 max-lg:px-4 max-lg:grid-cols-1'>
             {loading ? (
               <>
                 <div className="skeleton w-full h-64"></div>
@@ -162,13 +162,13 @@ const MyProfile = () => {
           </div>
         )}
         {activeTab === 'Saved Recipe' && (
-          <div className='grid grid-cols-4 gap-8 px-24'>
+          <div className='grid grid-cols-4 gap-8 px-24 max-lg:px-4 max-lg:grid-cols-1'>
             <Card />
             <Card />
           </div>
         )}
         {activeTab === 'Liked Recipe' && (
-          <div className='grid grid-cols-4 gap-8 px-24'>
+          <div className='grid grid-cols-4 gap-8 px-24 max-lg:px-4 max-lg:grid-cols-1'>
             <Card />
             <Card />
             <Card />

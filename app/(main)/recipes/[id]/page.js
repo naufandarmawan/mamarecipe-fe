@@ -107,8 +107,8 @@ const RecipeDetails = ({ params }) => {
   }
 
   return (
-    <div className='p-24 pt-48'>
-      <div className='w-1/2 mx-auto flex flex-col gap-16 items-center'>
+    <div className='p-24 pt-48 max-lg:p-4 max-lg:pt-32'>
+      <div className='w-1/2 mx-auto flex flex-col gap-16 items-center max-lg:w-full'>
 
         {loading ? (
           <div className="skeleton w-full h-20"></div>
@@ -197,8 +197,8 @@ const RecipeDetails = ({ params }) => {
         </div>
 
         <div className='flex gap-2 w-full'>
-          <Button text="Edit" className='btn btn-outline btn-info bg-transparent' onClick={handleUpdate} />
-          <Button text="Delete" className='btn btn-outline btn-error bg-transparent' onClick={handleDelete} loading={loading} />
+          <Button text="Edit" className='btn !btn-outline btn-info bg-transparent' onClick={handleUpdate} />
+          <Button text="Delete" className='btn !btn-outline btn-error bg-transparent' onClick={handleDelete} loading={loading} />
         </div>
 
         <div className='w-full flex flex-col gap-4 items-center'>
@@ -209,7 +209,7 @@ const RecipeDetails = ({ params }) => {
             placeholder='Comments'
           />
 
-          <Button className='w-1/3' text='Post' />
+          <Button className='w-1/3 max-lg:w-1/2' text='Post' />
 
         </div>
 

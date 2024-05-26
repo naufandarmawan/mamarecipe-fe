@@ -67,9 +67,9 @@ const AddRecipe = () => {
   }
 
   return (
-    <div className='p-24 pt-48'>
+    <div className='p-24 pt-48 max-lg:p-4 max-lg:pt-32'>
 
-      <div className='w-1/2 mx-auto flex flex-col gap-6 items-center'>
+      <div className='w-1/2 mx-auto flex flex-col gap-6 items-center max-lg:w-full'>
 
         <div className='flex flex-col gap-4 w-full'>
 
@@ -120,7 +120,7 @@ const AddRecipe = () => {
           /> */}
         </div>
 
-        <Button text="Post" onClick={handleAdd} className={'w-1/3'} loading={loading} />
+        <Button text="Post" onClick={handleAdd} className={'w-1/3 max-lg:w-1/2'} loading={loading} />
 
       </div>
 

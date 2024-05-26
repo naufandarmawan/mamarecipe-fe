@@ -31,8 +31,23 @@ const Navbar = () => {
     };
 
     return (
-        <div className='fixed flex p-6 px-24 w-full'>
-            <div className='w-full'>
+        <div className='fixed flex p-6 px-24 w-full max-lg:justify-between max-lg:px-4 max-lg:z-[100]'>
+
+            <div class="navbar-start hidden max-lg:block max-lg:w-fit">
+                <div class="dropdown">
+                    <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
+                    </div>
+                    <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[100] z- p-2 shadow bg-base-100 rounded-box w-52">
+                        <li><a href='/' className='active font-medium text-lg text-[#2E266F]'>Home</a></li>
+                        <li><a href='/recipes' className='font-medium text-lg text-[#2E266F]'>Recipes</a></li>
+                        <li><a href='/add' className=' font-medium text-lg text-[#2E266F]'>Add Recipe</a></li>
+                        <li><a href='/profile' className=' font-medium text-lg text-[#2E266F]'>Profile</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div className='w-full max-lg:w-fit max-lg:hidden'>
                 <ul className="menu menu-vertical lg:menu-horizontal p-0 gap-4">
                     <li><a href='/' className='active font-medium text-lg text-[#2E266F]'>Home</a></li>
                     <li><a href='/recipes' className='font-medium text-lg text-[#2E266F]'>Recipes</a></li>
@@ -46,13 +61,13 @@ const Navbar = () => {
                     <span className="loading loading-spinner text-white"></span>
                     <p className='font-medium text-sm text-white'>Loading</p>
                 </button>
-                
+
                 // <div className='flex items-center gap-2'>
                 //     <span className="loading loading-spinner text-slate-800"></span>
                 //     <p className='font-medium text-sm text-slate-800'>Loading</p>
                 // </div>
             ) : isLoggedIn ? (
-                <Button text="Log out" className='bg-red-700 hover:bg-red-800 border-red-800 hover:border-red-900' onClick={handleLogout} />
+                <Button text="Log out" className='!bg-red-600 hover:!bg-red-700 !border-red-700 hover:!border-red-800' onClick={handleLogout} />
             ) : (
 
                 // <Link className='flex items-center gap-2' href={'/login'}>
