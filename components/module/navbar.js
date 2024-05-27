@@ -42,16 +42,16 @@ const Navbar = () => {
                     </div>
                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                         <li>
-                            <a href='/' className={pathname === "/" ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Home</a>
+                            <Link href='/' className={pathname === "/" ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Home</Link>
                         </li>
                         <li>
-                            <a href='/recipes' className={pathname === "/recipes" ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Recipes</a>
+                            <Link href='/recipes' className={pathname === "/recipes" ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Recipes</Link>
                         </li>
                         <li>
-                            <a href='/add' className={pathname === "/add" ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Add Recipe</a>
+                            <Link href='/add' className={pathname === "/add" ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Add Recipe</Link>
                         </li>
                         <li>
-                            <a href='/profile' className={pathname === "/profile" ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Profile</a>
+                            <Link href='/profile' className={pathname === "/profile" ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Profile</Link>
                         </li>
                     </ul>
                 </div>
@@ -82,21 +82,19 @@ const Navbar = () => {
             <div className='w-full max-lg:w-fit max-lg:hidden'>
                 <ul className="menu menu-vertical lg:menu-horizontal p-0 gap-4">
                     <li>
-                        <a href='/' className={pathname === '/' ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-lg text-[#2E266F] text-opacity-80'}>
-                            Home
-                            </a>
+                        <Link href='/' className={pathname === '/' ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-lg text-[#2E266F] text-opacity-80'}>Home</Link>
                         <div className={pathname === '/' ? 'w-full h-1 !p-0 bg-[#2E266F]' : 'hidden'}></div>
                     </li>
                     <li>
-                        <a href='/recipes' className={pathname === '/recipes' ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-lg text-[#2E266F] text-opacity-80'}>Recipes</a>
+                        <Link href='/recipes' className={pathname === '/recipes' ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-lg text-[#2E266F] text-opacity-80'}>Recipes</Link>
                         <div className={pathname === '/recipes' ? 'w-full h-1 !p-0 bg-[#2E266F]' : 'hidden'}></div>
                     </li>
                     <li>
-                        <a href='/add' className={pathname === '/add' ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-lg text-[#2E266F] text-opacity-80'}>Add Recipe</a>
+                        <Link href='/add' className={pathname === '/add' ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-lg text-[#2E266F] text-opacity-80'}>Add Recipe</Link>
                         <div className={pathname === '/add' ? 'w-full h-1 !p-0 bg-[#2E266F]' : 'hidden'}></div>
                     </li>
                     <li>
-                        <a href='/profile' className={pathname === '/profile' ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-lg text-[#2E266F] text-opacity-80'}>Profile</a>
+                        <Link href='/profile' className={pathname === '/profile' ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-lg text-[#2E266F] text-opacity-80'}>Profile</Link>
                         <div className={pathname === '/profile' ? 'w-full h-1 !p-0 bg-[#2E266F]' : 'hidden'}></div>
                     </li>
                 </ul>

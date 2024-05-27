@@ -205,6 +205,7 @@ const Register = () => {
               label='Name'
               placeholder='Name'
               validations={{ name: validateName }}
+              className={'focus-within:!outline-yellow-400'}
             />
             <Input
               type='email'
@@ -214,6 +215,7 @@ const Register = () => {
               label='Email'
               placeholder='Enter email address'
               validations={{ email: validateEmail }}
+              className={'focus-within:!outline-yellow-400'}
             />
             <Input
               type='tel'
@@ -223,6 +225,7 @@ const Register = () => {
               label='Phone Number'
               placeholder='08xxxxxxxxxx'
               validations={{ phone: validatePhone }}
+              className={'focus-within:!outline-yellow-400'}
             />
             <Input
               type='password'
@@ -232,6 +235,7 @@ const Register = () => {
               label='Create New Password'
               placeholder='Create New Password'
               validations={{ password: validatePassword }}
+              className={'focus-within:!outline-yellow-400'}
             />
             <Input
               type='password'
@@ -241,6 +245,7 @@ const Register = () => {
               label='New Password'
               placeholder='New Password'
               validations={{ confirmPassword: validateConfirmPassword }}
+              className={'focus-within:!outline-yellow-400'}
             />
             <Checkbox label="I agree to terms & conditions" checked={termsChecked} onChange={handleCheckboxChange} />
           </div>

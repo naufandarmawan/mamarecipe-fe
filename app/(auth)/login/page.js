@@ -164,6 +164,7 @@ const Login = () => {
               label='Email'
               placeholder='Enter email address'
               validations={{ email: validateEmail }}
+              className={'focus-within:!outline-yellow-400'}
             />
             <Input
               type='password'
@@ -173,6 +174,7 @@ const Login = () => {
               label='Password'
               placeholder='Password'
               validations={{ password: validatePassword }}
+              className={'focus-within:!outline-yellow-400'}
             />
             <Checkbox label="I agree to terms & conditions" checked={termsChecked} onChange={handleCheckboxChange} />
           </div>
