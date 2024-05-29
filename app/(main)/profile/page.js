@@ -10,11 +10,13 @@ import { toast } from 'sonner'
 
 const MyProfile = () => {
 
-  const [recipe, setRecipe] = useState([])
-  const [params, setParams] = useState({
-    limit: 80,
-    page: 1,
-  })
+  const [myRecipe, setMyRecipe] = useState([])
+  // const [params, setParams] = useState({
+  //   limit: 80,
+  //   page: 1,
+  // })
+
+  const [myProfile, setMyProfile] = useState({})
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -24,36 +26,75 @@ const MyProfile = () => {
     setActiveTab(tab);
   };
 
-  const getRecipe = async () => {
-
+  const getMyProfile = async () => {
     try {
 
       setLoading(true);
 
-      const queryParams = new URLSearchParams({
-        limit: params.limit,
-        page: params.page,
-      });
-
-      const url = `${process.env.NEXT_PUBLIC_API}/v1/recipes?${queryParams.toString()}`;
-
-      const response = await fetch(url, {
+      const response = await fetch(`/v1/users/profile`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
+        credentials: "include"
       });
 
       if (!response.ok) {
         // throw new Error('Login failed');
-        setError('Get recipes failed')
+        setError('Get my recipes failed')
         toast.error(error)
         setLoading(false);
         return
       }
 
       const res = await response.json();
-      setRecipe(res.data)
+      setMyProfile(res.data)
+
+      toast.success(`Get my profile success`)
+      console.log(res.data);
+
+    } catch (err) {
+
+      setError(err.message);
+      toast.error(error)
+
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const getMyRecipe = async () => {
+
+    try {
+
+      setLoading(true);
+
+      // const queryParams = new URLSearchParams({
+      //   limit: params.limit,
+      //   page: params.page,
+      // });
+
+      // const url = `${process.env.NEXT_PUBLIC_API}/v1/recipes?${queryParams.toString()}`;
+      const url = `/v1/recipes/self`;
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: "include"
+      });
+
+      if (!response.ok) {
+        // throw new Error('Login failed');
+        setError('Get my recipes failed')
+        toast.error(error)
+        setLoading(false);
+        return
+      }
+
+      const res = await response.json();
+      setMyRecipe(res.data)
 
       // toast.success(`Get recipes success`)
       // console.log(res.data);
@@ -71,8 +112,8 @@ const MyProfile = () => {
   }
 
   useEffect(() => {
-    // getTalent()
-    getRecipe()
+    getMyProfile()
+    getMyRecipe()
   }, [])
 
   const router = useRouter()
@@ -95,13 +136,13 @@ const MyProfile = () => {
             <div className="dropdown dropdown-end">
               <img tabIndex={0} className='size-6' src='/edit.svg' />
               <ul tabIndex={0} className="dropdown-content z-[1] menu my-4 p-2 shadow text-center rounded-box w-52 bg-[#E7E7E7]">
-                <li><a className='' href=''>Change Photo Profile</a></li>
-                <li><a className='' href=''>Change Password</a></li>
+                <li><label><input className='hidden' type="file" />Change Photo Profile</label></li>
+                <li><Link className='' href='/forgot-password/reset-password'>Change Password</Link></li>
               </ul>
             </div>
           </div>
 
-          <p className='font-medium text-2xl text-black text-center'>Garneta Sharina</p>
+          <p className='font-medium text-2xl text-black text-center'>{myProfile.name || "Garneta Sharina"}</p>
 
         </div>
 
@@ -145,9 +186,9 @@ const MyProfile = () => {
                 <div className="skeleton w-full h-64"></div>
                 <div className="skeleton w-full h-64"></div>
               </>
-            ) : recipe.length > 0 ? (
+            ) : myRecipe.length > 0 ? (
               <>
-                {recipe.map((item) => (
+                {myRecipe.map((item) => (
                   <Card
                     key={item.id}
                     image={item.image}

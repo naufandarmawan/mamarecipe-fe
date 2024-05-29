@@ -132,10 +132,12 @@ const Home = () => {
             <p className='font-medium text-6xl text-[#3F3A3A] max-lg:text-4xl'>Healthy Bone Broth Ramen (Quick & Easy)</p>
             <div className='w-28 h-[1px] bg-yellow-900'></div>
             <p className='font-medium text-2xl text-[#3F3A3A] max-lg:text-xl'>Quick + Easy Chicken Bone Broth Ramen- Healthy chicken ramen in a hurry? That’s right!</p>
-            <Button
-              text='Learn More'
-              className={'w-40'}
-            />
+            <Link href='/recipes'>
+              <Button
+                text='Learn More'
+                className={'w-40'}
+              />
+            </Link>
           </div>
 
         </div>
@@ -159,10 +161,12 @@ const Home = () => {
             <p className='font-medium text-6xl text-[#3F3A3A] max-lg:text-4xl'>Healthy Bone Broth Ramen (Quick & Easy)</p>
             <div className='w-28 h-[1px] bg-yellow-900'></div>
             <p className='font-medium text-2xl text-[#3F3A3A] max-lg:text-xl'>Quick + Easy Chicken Bone Broth Ramen- Healthy chicken ramen in a hurry? That’s right!</p>
-            <Button
-              text='Learn More'
-              className={'w-40'}
-            />
+            <Link href='/recipes'>
+              <Button
+                text='Learn More'
+                className={'w-40'}
+              />
+            </Link>
           </div>
 
         </div>

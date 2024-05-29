@@ -5,9 +5,9 @@ import Button from '@/components/base/button'
 import Input from '@/components/base/input'
 import Textarea from '@/components/base/textarea'
 import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 
-const EditRecipe = ({ params }) => {
+const EditRecipe = () => {
   const [recipe, setRecipe] = useState({})
   const [form, setForm] = useState({
     image: '',
@@ -21,6 +21,10 @@ const EditRecipe = ({ params }) => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter()
+  
+  const {id} = useParams()
+
+  // console.log(id);
 
   const getRecipeDetails = async () => {
 
@@ -28,7 +32,7 @@ const EditRecipe = ({ params }) => {
 
       setLoading(true);
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes/${params.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -69,7 +73,7 @@ const EditRecipe = ({ params }) => {
 
       setLoading(true);
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes/${params.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -124,7 +128,7 @@ const EditRecipe = ({ params }) => {
         <div className='flex flex-col gap-4 w-full'>
 
           <label className='w-full cursor-pointer p-20 bg-[#F6F5F4] rounded-lg border border-stone-300'>
-            <input className='invisible' type="file" />
+            <input className='hidden' type="file" />
             <div className='w-full flex flex-col gap-6 items-center '>
               <img src="/add-photo.svg" />
               <p className='font-medium text-lg text-[#666666] text-center'>Add Photo</p>

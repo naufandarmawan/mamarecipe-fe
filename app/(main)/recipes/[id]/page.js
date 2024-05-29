@@ -66,7 +66,7 @@ const RecipeDetails = ({ params }) => {
   }
 
   const handleUpdate = () => {
-    router.push(`/recipes/edit/${params.id}`)
+    router.push(`/recipes/${params.id}/edit`)
   }
 
   const handleDelete = async () => {
@@ -183,7 +183,7 @@ const RecipeDetails = ({ params }) => {
 
         </div>
 
-        <div className='w-full flex flex-col gap-8'>
+        {/* <div className='w-full flex flex-col gap-8'>
           <p className='font-medium text-2xl text-[#3F3A3A]'>Step-by-step</p>
           <p className='font-normal text-xl text-black'>
             - 2 eggs <br />
@@ -194,7 +194,7 @@ const RecipeDetails = ({ params }) => {
             - 2-3 slices of tomato or a lettuce leaf and a slice of ham or cheese <br />
             - crisps , to serve <br />
           </p>
-        </div>
+        </div> */}
 
         <div className='flex gap-2 w-full'>
           <Button text="Edit" className='btn !btn-outline btn-info bg-transparent' onClick={handleUpdate} />

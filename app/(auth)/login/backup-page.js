@@ -7,8 +7,48 @@ import Checkbox from '@/components/base/checkbox'
 import Link from 'next/link'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+// import { useDispatch, useSelector } from 'react-redux';
+// import { loginUser } from '../../../redux/authSlice';
 
 const Login = () => {
+
+  // const [form, setForm] = useState({
+  //   email: '',
+  //   password: '',
+  // });
+  // const [termsChecked, setTermsChecked] = useState(false);
+  // const { loading, error, user } = useSelector((state) => state.auth);
+  // const dispatch = useDispatch();
+  // const router = useRouter();
+
+  // const handleChange = (fieldName, value) => {
+  //   setForm((prevState) => ({
+  //     ...prevState,
+  //     [fieldName]: value,
+  //   }));
+  // };
+
+  // const handleCheckboxChange = (e) => {
+  //   setTermsChecked(e.target.checked);
+  // };
+
+  // const handleLogin = () => {
+  //   if (!termsChecked) {
+  //     toast.error('Please agree to terms & conditions');
+  //     return;
+  //   }
+  //   dispatch(loginUser(form))
+  //     .unwrap()
+  //     .then((res) => {
+  //       localStorage.setItem('token', res.data.token);
+  //       localStorage.setItem('refreshToken', res.data.refreshToken);
+  //       toast.success(`Welcome ${res.data.name}`);
+  //       router.push('/');
+  //     })
+  //     .catch((err) => {
+  //       toast.error(err.message);
+  //     });
+  // };
 
   const [form, setForm] = useState({
     email: '',
@@ -62,16 +102,16 @@ const Login = () => {
 
       setLoading(true);
 
-      const response = await fetch(`/v1/auth/login`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(form),
-        credentials: "include"
+        body: JSON.stringify(form)
       });
 
       if (!response.ok) {
+        // throw new Error('Login failed');
         setError('Login failed')
         toast.error(error)
         setLoading(false);
@@ -80,12 +120,12 @@ const Login = () => {
 
       const res = await response.json();
 
-      // const { token, refreshToken } = res.data
-      // localStorage.setItem('token', token)
-      // localStorage.setItem('refreshToken', refreshToken)
+      const { token, refreshToken } = res.data
+      localStorage.setItem('token', token)
+      localStorage.setItem('refreshToken', refreshToken)
 
       toast.success(`${res.message} - Welcome ${res.data.name}`)
-      // console.log(res.data);
+      console.log(res.data);
       router.push('/')
 
 

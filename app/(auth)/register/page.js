@@ -185,7 +185,7 @@ const Register = () => {
   return (
     <div className='flex max-lg:flex-col'>
 
-      <div className='w-1/2 flex flex-col justify-center items-center bg-cover max-lg:invisible max-lg:h-0' style={{
+      <div className='w-1/2 flex flex-col justify-center items-center bg-cover max-lg:hidden max-lg:h-0' style={{
         backgroundImage: `url('/auth-background.png')`
       }}>
         <Link href='/'><img className='w-32' src='/logo.svg' /></Link>
