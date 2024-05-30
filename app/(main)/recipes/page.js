@@ -10,10 +10,15 @@ const Recipes = () => {
   const [params, setParams] = useState({
     limit: 9,
     page: 1,
-    search: ''
+    search: '',
+    sort: 'created_at',
+    sortBy: 'desc',
+
   })
+  
   const [searchInput, setSearchInput] = useState('');
-  // const [selectedSort, setSelectedSort] = useState('');
+  const [selectedSort, setSelectedSort] = useState('');
+  const [selectedSortBy, setSelectedSortBy] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -28,6 +33,8 @@ const Recipes = () => {
         limit: params.limit,
         page: params.page,
         ...(params.search ? { search: params.search } : {}),
+        ...(params.sort ? { sort: params.sort } : {}),
+        sortBy: params.sortBy,
       });
 
       const url = `${process.env.NEXT_PUBLIC_API}/v1/recipes?${queryParams.toString()}`;
@@ -63,28 +70,10 @@ const Recipes = () => {
       setLoading(false);
     }
 
-    //   api.get('/workers/', {
-    //     params: {
-    //       limit: params.limit,
-    //       page: params.page,
-    //       ...(params.search ? { search: params.search } : {}),
-    //       ...(params.sort ? { sort: params.sort } : {}),
-    //       sortBy: params.sortBy,
-    //     }
-    //   })
-    //     .then((res) => {
-    //       const result = res.data.data
-    //       setTalent(result)
-    //     })
-    //     .catch((err) => {
-    //       console.log(err.response);
-    //     })
-
   }
 
 
   useEffect(() => {
-    // getTalent()
     getRecipe()
   }, [params])
 
@@ -115,15 +104,21 @@ const Recipes = () => {
     if (searchInput === '') {
       setParams({ ...params, search: null });
     } else {
-      setParams({ ...params, search: searchInput, /* sort: selectedSort */ });
+      setParams({ ...params, search: searchInput, sort: selectedSort, sortBy: selectedSortBy });
     }
   }
 
-  // const handleSortChange = (e) => {
-  //   const selectedValue = e.target.value;
-  //   setSelectedSort(selectedValue);
-  //   // setParams({ ...params, sort: selectedValue });
-  // };
+  const handleSortChange = (e) => {
+    const selectedValue = e.target.value;
+    setSelectedSort(selectedValue);
+    // setParams({ ...params, sort: selectedValue });
+  };
+
+  const handleSortByChange = (e) => {
+    const selectedValue = e.target.value;
+    setSelectedSortBy(selectedValue);
+    // setParams({ ...params, sort: selectedValue });
+  };
 
   return (
     <div className='flex flex-col gap-16 p-24 pt-48 max-lg:p-4 max-lg:pt-32 max-lg:gap-6'>
@@ -139,12 +134,16 @@ const Recipes = () => {
             <input className="input input-bordered join-item" placeholder="Search" onChange={handleSearchInputChange} value={searchInput} name='search' />
           </div>
         </div>
-        {/* <select className="select select-bordered join-item">
-          <option disabled selected>Filter</option>
-          <option>Sci-fi</option>
-          <option>Drama</option>
-          <option>Action</option>
-        </select> */}
+        <select className="select select-bordered join-item" value={selectedSort} onChange={handleSortChange}>
+          <option value={''} selected>Sort</option>
+          <option value={'title'}>Title</option>
+          <option value={'created_at'}>Created At</option>
+        </select>
+        <select className="select select-bordered join-item" value={selectedSortBy} onChange={handleSortByChange}>
+          <option value={''} selected>Sort By</option>
+          <option value={'asc'}>Ascending</option>
+          <option value={'desc'}>Descending</option>
+        </select>
         <button className="btn join-item" onClick={handleSearch}>Search</button>
       </div>
 

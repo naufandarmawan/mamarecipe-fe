@@ -45,7 +45,7 @@ const Navbar = () => {
                             <Link href='/' className={pathname === "/" ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Home</Link>
                         </li>
                         <li>
-                            <Link href='/recipes' className={pathname === "/recipes" ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Recipes</Link>
+                            <Link href='/recipes' className={pathname.startsWith('/recipes') ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Recipes</Link>
                         </li>
                         <li>
                             <Link href='/add' className={pathname === "/add" ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-opacity-80 text-lg text-[#2E266F]'}>Add Recipe</Link>
@@ -86,8 +86,8 @@ const Navbar = () => {
                         <div className={pathname === '/' ? 'w-full h-1 !p-0 bg-[#2E266F]' : 'hidden'}></div>
                     </li>
                     <li>
-                        <Link href='/recipes' className={pathname === '/recipes' ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-lg text-[#2E266F] text-opacity-80'}>Recipes</Link>
-                        <div className={pathname === '/recipes' ? 'w-full h-1 !p-0 bg-[#2E266F]' : 'hidden'}></div>
+                        <Link href='/recipes' className={pathname.startsWith('/recipes') ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-lg text-[#2E266F] text-opacity-80'}>Recipes</Link>
+                        <div className={pathname.startsWith('/recipes') ? 'w-full h-1 !p-0 bg-[#2E266F]' : 'hidden'}></div>
                     </li>
                     <li>
                         <Link href='/add' className={pathname === '/add' ? 'font-semibold text-lg text-[#2E266F]' : 'font-medium text-lg text-[#2E266F] text-opacity-80'}>Add Recipe</Link>
