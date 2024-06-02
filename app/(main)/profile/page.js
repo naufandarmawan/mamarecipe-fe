@@ -11,6 +11,9 @@ import { toast } from 'sonner'
 const MyProfile = () => {
 
   const [myRecipe, setMyRecipe] = useState([])
+  const [likedRecipe, setLikedRecipe] = useState([])
+  const [savedRecipe, setSavedRecipe] = useState([])
+
   // const [params, setParams] = useState({
   //   limit: 80,
   //   page: 1,
@@ -41,7 +44,7 @@ const MyProfile = () => {
 
       if (!response.ok) {
         // throw new Error('Login failed');
-        setError('Get my recipes failed')
+        setError('Get my profile failed')
         toast.error(error)
         setLoading(false);
         return
@@ -50,8 +53,8 @@ const MyProfile = () => {
       const res = await response.json();
       setMyProfile(res.data)
 
-      toast.success(`Get my profile success`)
-      console.log(res.data);
+      // toast.success(`Get my profile success`)
+      // console.log(res.data);
 
     } catch (err) {
 
@@ -94,7 +97,110 @@ const MyProfile = () => {
       }
 
       const res = await response.json();
+      // console.log(res);
       setMyRecipe(res.data)
+
+      // toast.success(`Get recipes success`)
+      // console.log(res.data);
+
+
+    } catch (err) {
+
+      setError(err.message);
+      toast.error(error)
+
+    } finally {
+      setLoading(false);
+    }
+
+  }
+
+  const getLikedRecipe = async () => {
+
+    try {
+
+      setLoading(true);
+
+      // const queryParams = new URLSearchParams({
+      //   limit: params.limit,
+      //   page: params.page,
+      // });
+
+      // const url = `${process.env.NEXT_PUBLIC_API}/v1/recipes?${queryParams.toString()}`;
+      const url = `/v1/recipes/like`;
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: "include"
+      });
+
+      if (!response.ok) {
+        // throw new Error('Login failed');
+        setError('Get my liked recipes failed')
+        toast.error(error)
+        setLoading(false);
+        return
+      }
+
+      const res = await response.json();
+      // console.log(res);
+
+      const recipes = res.data.map(item => item.recipe);
+      setLikedRecipe(recipes);
+
+      // toast.success(`Get recipes success`)
+      // console.log(res.data);
+
+
+    } catch (err) {
+
+      setError(err.message);
+      toast.error(error)
+
+    } finally {
+      setLoading(false);
+    }
+
+  }
+
+  const getSavedRecipe = async () => {
+
+    try {
+
+      setLoading(true);
+
+      // const queryParams = new URLSearchParams({
+      //   limit: params.limit,
+      //   page: params.page,
+      // });
+
+      // const url = `${process.env.NEXT_PUBLIC_API}/v1/recipes?${queryParams.toString()}`;
+      const url = `/v1/recipes/save`;
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: "include"
+      });
+
+      if (!response.ok) {
+        // throw new Error('Login failed');
+        setError('Get my saved recipes failed')
+        toast.error(error)
+        setLoading(false);
+        return
+      }
+
+      const res = await response.json();
+      // console.log(res);
+
+      const recipes = res.data.map(item => item.recipe);
+      setSavedRecipe(recipes);
 
       // toast.success(`Get recipes success`)
       // console.log(res.data);
@@ -114,6 +220,8 @@ const MyProfile = () => {
   useEffect(() => {
     getMyProfile()
     getMyRecipe()
+    getLikedRecipe()
+    getSavedRecipe()
   }, [])
 
   const router = useRouter()
@@ -204,16 +312,52 @@ const MyProfile = () => {
         )}
         {activeTab === 'Saved Recipe' && (
           <div className='grid grid-cols-4 gap-8 px-24 max-lg:px-4 max-lg:grid-cols-1'>
-            <Card />
-            <Card />
+            {loading ? (
+              <>
+                <div className="skeleton w-full h-64"></div>
+                <div className="skeleton w-full h-64"></div>
+                <div className="skeleton w-full h-64"></div>
+                <div className="skeleton w-full h-64"></div>
+              </>
+            ) : savedRecipe.length > 0 ? (
+              <>
+                {savedRecipe.map((item) => (
+                  <Card
+                    key={item.id}
+                    image={item.image}
+                    title={item.title}
+                    onClick={() => handleNavigate(item.id)}
+                  />
+                ))}
+              </>
+            ) : (
+              <p>No recipes found.</p>
+            )}
           </div>
         )}
         {activeTab === 'Liked Recipe' && (
           <div className='grid grid-cols-4 gap-8 px-24 max-lg:px-4 max-lg:grid-cols-1'>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {loading ? (
+              <>
+                <div className="skeleton w-full h-64"></div>
+                <div className="skeleton w-full h-64"></div>
+                <div className="skeleton w-full h-64"></div>
+                <div className="skeleton w-full h-64"></div>
+              </>
+            ) : likedRecipe.length > 0 ? (
+              <>
+                {likedRecipe.map((item) => (
+                  <Card
+                    key={item.id}
+                    image={item.image}
+                    title={item.title}
+                    onClick={() => handleNavigate(item.id)}
+                  />
+                ))}
+              </>
+            ) : (
+              <p>No recipes found.</p>
+            )}
           </div>
         )}
 

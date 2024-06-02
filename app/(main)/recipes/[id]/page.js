@@ -8,11 +8,13 @@ import { useRouter } from 'next/navigation'
 
 
 const RecipeDetails = ({ params }) => {
-  const [recipeDetails, setRecipeDetails] = useState([])
+  const [recipeDetails, setRecipeDetails] = useState({})
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [liked, setLiked] = useState(false);
+  const [likeData, setLikeData] = useState({})
   const [saved, setSaved] = useState(false);
+  const [saveData, setSaveData] = useState({})
   const router = useRouter()
 
   const getRecipeDetails = async () => {
@@ -20,16 +22,17 @@ const RecipeDetails = ({ params }) => {
     try {
 
       setLoading(true);
+      // const token = localStorage.getItem('token');
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes/${params.id}`, {
+      const response = await fetch(`/v1/recipes/${params.id}`, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         }
       });
 
       if (!response.ok) {
-        // throw new Error('Login failed');
+        // throw new Error('Get recipe details failed');
         setError('Get recipe details failed')
         toast.error(error)
         setLoading(false);
@@ -37,6 +40,7 @@ const RecipeDetails = ({ params }) => {
       }
 
       const res = await response.json();
+      // console.log(res.data);
       setRecipeDetails(res.data)
 
       // toast.success(`Get recipes details success`)
@@ -57,12 +61,23 @@ const RecipeDetails = ({ params }) => {
     getRecipeDetails()
   }, [])
 
-  const toggleLike = () => {
-    setLiked(!liked);
+  const likeToggle = async () => {
+    // setLiked(!liked);
+    if (liked) {
+      await cancelLikeRecipe();
+    } else {
+      await likeRecipe();
+    }
+
   }
 
-  const toggleSave = () => {
-    setSaved(!saved);
+  const saveToggle = async () => {
+    // setSaved(!saved);
+    if (saved) {
+      await cancelSaveRecipe();
+    } else {
+      await saveRecipe();
+    }
   }
 
   const handleUpdate = () => {
@@ -106,6 +121,138 @@ const RecipeDetails = ({ params }) => {
     }
   }
 
+  const likeRecipe = async () => {
+    try {
+      const response = await fetch(`/v1/recipes/like`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ recipe_id: `${params.id}` }),
+        credentials: 'include'
+      });
+
+      const result = await response.json();
+      console.log(result);
+
+      if (!response.ok) {
+        if (result.statuCode === 401) {
+          setLiked(!liked);
+          toast.warning('Recipe already liked');
+        } else {
+          throw new Error('Like recipe failed');
+        }
+      } else {
+        setLikeData(result.data)
+        setLiked(!liked);
+        toast.success('Recipe liked');
+      }
+    } catch (err) {
+      setError(err.message);
+      toast.error(err.message);
+    }
+  }
+
+  const cancelLikeRecipe = async () => {
+    try {
+      const response = await fetch(`/v1/recipes/like/${likeData.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error('Cancel like recipe failed');
+      }
+
+      setLiked(false);
+      toast.success('Recipe unliked');
+    } catch (err) {
+      setError(err.message);
+      toast.error(err.message);
+    }
+  }
+
+  const saveRecipe = async () => {
+    try {
+      const response = await fetch(`/v1/recipes/save`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ recipe_id: `${params.id}` }),
+        credentials: 'include'
+      });
+
+      const result = await response.json();
+      console.log(result);
+
+      if (!response.ok) {
+        if (result.statuCode === 401) {
+          setSaved(!saved);
+          toast.warning('Recipe already saved');
+        } else {
+          throw new Error('Save recipe failed');
+        }
+      } else {
+        setSaveData(result.data)
+        setSaved(!saved);
+        toast.success('Recipe saved');
+      }
+    } catch (err) {
+      setError(err.message);
+      toast.error(err.message);
+    }
+  }
+
+  const cancelSaveRecipe = async () => {
+    try {
+      const response = await fetch(`/v1/recipes/save/${saveData.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error('Cancel save recipe failed');
+      }
+
+      setSaved(false);
+      toast.success('Recipe unsaved');
+    } catch (err) {
+      setError(err.message);
+      toast.error(err.message);
+    }
+  }
+
+  // const handleLike = async () => {
+  //   try {
+  //     const response = await fetch(`/v1/recipes/like${liked ? `/${params.id}` : ''}`, {
+  //       method: liked ? 'DELETE' : 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: liked ? null : JSON.stringify({ recipe_id: params.id }),
+  //       credentials: 'include'
+  //     });
+
+
+  //     if (!response.ok) {
+  //       throw new Error(liked ? 'Cancel like recipe failed' : 'Like recipe failed');
+  //     }
+
+  //     setLiked(!liked);
+  //     toast.success(liked ? 'Recipe unliked' : 'Recipe liked');
+  //   } catch (err) {
+  //     setError(err.message);
+  //     toast.error(err.message);
+  //   }
+  // }
+
   return (
     <div className='p-24 pt-48 max-lg:p-4 max-lg:pt-32'>
       <div className='w-1/2 mx-auto flex flex-col gap-16 items-center max-lg:w-full'>
@@ -122,7 +269,7 @@ const RecipeDetails = ({ params }) => {
 
           <button
             className={`btn btn-square hover:bg-yellow-100 ${saved ? 'bg-yellow-500' : 'bg-white'}`}
-            onClick={toggleSave}
+            onClick={saveToggle}
           >
             <svg xmlns="http://www.w3.org/2000/svg"
               className={`h-6 w-6 ${saved ? 'text-white' : 'text-yellow-500'}`}
@@ -141,7 +288,7 @@ const RecipeDetails = ({ params }) => {
 
           <button
             className={`btn btn-square hover:bg-yellow-100 ${liked ? 'bg-yellow-500' : 'bg-white'}`}
-            onClick={toggleLike}
+            onClick={likeToggle}
           >
             <svg xmlns="http://www.w3.org/2000/svg"
               className={`h-6 w-6 ${liked ? 'text-white' : 'text-yellow-500'}`}

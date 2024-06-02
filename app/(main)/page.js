@@ -1,79 +1,116 @@
-"use client"
+// "use client"
 
-import React, { useEffect, useState } from 'react'
+// import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Card from '@/components/base/card'
 import Button from '@/components/base/button'
 import Input from '@/components/base/input'
-import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
+// import { useRouter } from 'next/navigation'
+// import { toast } from 'sonner'
 import Link from 'next/link'
+// import { getRecipe } from '@/service/recipes'
 
-const Home = () => {
+const Home = async () => {
 
-  const [recipe, setRecipe] = useState([])
-  const [params, setParams] = useState({
-    limit: 6,
-    page: 1,
-  })
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  // const [recipe, setRecipe] = useState([])
+  // const [params, setParams] = useState({
+  //   limit: 6,
+  //   page: 1,
+  // })
+  // // const [error, setError] = useState('');
+  // const [loading, setLoading] = useState(false);
 
-  const getRecipe = async () => {
+  // const getRecipe = async () => {
 
+  //   try {
+
+  //     // setLoading(true);
+
+  //     // const queryParams = new URLSearchParams({
+  //     //   limit: params.limit,
+  //     //   page: params.page,
+  //     // });
+
+  //     // const url = `${process.env.NEXT_PUBLIC_API}/v1/recipes?${queryParams.toString()}`;
+
+  //     const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes?limit=6`, {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
+
+  //     if (!response.ok) {
+  //       // throw new Error('Login failed');
+  //       // setError('Get recipes failed')
+  //       // toast.error(error)
+  //       toast.error('Get recipes failed')
+  //       // setLoading(false);
+  //       return
+  //     }
+
+  //     // const res = await response.json();
+  //     // setRecipe(res.data)
+
+  //     const { data } = await response.json();
+
+  //     toast.success(`Get recipes success`)
+
+  //     return data
+
+  //   } catch (err) {
+
+  //     // setError(err.message);
+  //     // toast.error(error)
+
+  //     toast.error(err.message)
+
+  //   } finally {
+  //     // setLoading(false);
+  //   }
+
+  // }
+
+  // const { data } = await getRecipe()
+
+  // console.log(data);
+
+  // useEffect(() => {
+  //   // getTalent()
+  //   getRecipe()
+  // }, [])
+
+  // const router = useRouter()
+  // const handleNavigate = (id) => {
+  //   router.push(`/recipes/${id}`)
+
+  // }
+
+  const getRecipeHome = async () => {
     try {
 
-      setLoading(true);
-
-      const queryParams = new URLSearchParams({
-        limit: params.limit,
-        page: params.page,
-      });
-
-      const url = `${process.env.NEXT_PUBLIC_API}/v1/recipes?${queryParams.toString()}`;
-
-      const response = await fetch(url, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes?limit=6&sort=created_at&sortBy=asc`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        cache: 'force-cache'
+
       });
 
       if (!response.ok) {
-        // throw new Error('Login failed');
-        setError('Get recipes failed')
-        toast.error(error)
-        setLoading(false);
-        return
+        throw new Error('Get recipes failed')
       }
 
-      const res = await response.json();
-      setRecipe(res.data)
+      const result = await response.json();
 
-      // toast.success(`Get recipes success`)
-      // console.log(res.data);
-
+      return result
 
     } catch (err) {
+      return Promise.reject(err.message);
 
-      setError(err.message);
-      toast.error(error)
-
-    } finally {
-      setLoading(false);
     }
-
   }
 
-  useEffect(() => {
-    // getTalent()
-    getRecipe()
-  }, [])
-
-  const router = useRouter()
-  const handleNavigate = (id) => {
-    router.push(`/recipes/${id}`)
-
-  }
+  const { data } = await getRecipeHome()
+  // const data = result.data
 
   return (
     <div className='flex flex-col gap-32 max-lg:pt-32'>
@@ -182,7 +219,7 @@ const Home = () => {
 
         {/* <div className='grid grid-cols-3 gap-8 px-24'> */}
 
-        {loading ? (
+        {/* {loading ? (
           <div className='grid grid-cols-3 gap-8 px-24 max-lg:grid-cols-1 max-lg:px-4'>
             <div className="skeleton w-full h-64"></div>
             <div className="skeleton w-full h-64"></div>
@@ -199,7 +236,27 @@ const Home = () => {
               />
             ))}
           </div>
-        )}
+        )} */}
+
+        {/* {loading ? (
+          <div className='grid grid-cols-3 gap-8 px-24 max-lg:grid-cols-1 max-lg:px-4'>
+            <div className="skeleton w-full h-64"></div>
+            <div className="skeleton w-full h-64"></div>
+            <div className="skeleton w-full h-64"></div>
+          </div>
+        ) : ( */}
+        <div className='grid grid-cols-3 gap-8 px-24 max-lg:grid-cols-1 max-lg:px-4'>
+          {data.map((item) => (
+            <Link href={`/recipes/${item.id}`} key={item.id}>
+              <Card
+                image={item.image}
+                title={item.title}
+              // onClick={() => handleNavigate(item.id)}
+              />
+            </Link>
+          ))}
+        </div>
+        {/* )} */}
 
         {/* </div> */}
 

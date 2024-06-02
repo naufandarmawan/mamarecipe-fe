@@ -68,7 +68,7 @@ const Login = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(form),
-        credentials: "include"
+        credentials: "include",
       });
 
       if (!response.ok) {

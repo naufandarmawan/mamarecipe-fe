@@ -4,36 +4,111 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Button from '@/components/base/button'
 import { usePathname, useRouter } from 'next/navigation'
+import { getCookie } from '@/service/auth'
+import { toast } from 'sonner'
 
 
 const Navbar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [scrollPosition, setScrollPosition] = useState(0);
     const router = useRouter()
     const pathname = usePathname();
 
-
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            setIsLoggedIn(true);
-        }
-        setIsLoading(false);
+        const fetchToken = async () => {
+            const token = await getCookie('token');
+            // console.log('navbar:', token);
+
+            // console.log(token);
+
+            if (token) {
+                setIsLoggedIn(true);
+            }
+            setIsLoading(false);
+        };
+
+        fetchToken();
+
+        const handleScroll = () => {
+            const position = window.scrollY;
+            setScrollPosition(position);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+
+        // // const token = localStorage.getItem('token');
+        // console.log('navbar:', token);
+
+        // if (token) {
+        //     setIsLoggedIn(true);
+        // }
+        // setIsLoading(false);
     }, []);
 
     const handleLogin = () => {
         router.push('/login')
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('refreshToken');
+    const handleLogout = async () => {
+        const logout = async () => {
+            try {
+                const response = await fetch(`/v1/auth/logout`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+
+                if (!response.ok) {
+                    throw new Error('Logout failed')
+                }
+
+                const result = await response.json();
+
+                return result
+
+            } catch (err) {
+                return Promise.reject(err.message);
+            }
+        }
+        // localStorage.removeItem('token');
+        // localStorage.removeItem('refreshToken');
+        // const result = logout()
+        // const logout = async () => {
+        //     try {
+        //         const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/auth/logout`, {
+        //             method: 'GET',
+        //             credentials: 'include'
+        //         });
+
+        //         if (!response.ok) {
+        //             throw new Error('Logout failed')
+        //         }
+
+        //         const result = await response.json();
+
+        //         return result
+
+        //     } catch (err) {
+        //         return Promise.reject(err.message);
+        //     }
+        // }
+
+        const result = await logout()
+
+        toast.success(result.message)
         setIsLoggedIn(false);
 
     };
 
     return (
-        <div className='fixed flex p-6 px-24 w-full max-lg:justify-between max-lg:px-4 max-lg:z-[100]'>
+        <div className={`fixed flex p-6 px-24 w-full max-lg:justify-between max-lg:px-4 max-lg:z-[100] ${scrollPosition > 1 ? 'bg-white' : 'bg-transparent'}`}>
 
             <div className="navbar-start hidden max-lg:block max-lg:w-fit">
                 <div className="dropdown">
