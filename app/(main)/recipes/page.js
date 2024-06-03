@@ -5,120 +5,176 @@ import Card from '@/components/base/card'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
+import useRecipeStore from '../../../store/useRecipeStore';
+
 const Recipes = () => {
-  const [recipe, setRecipe] = useState([])
-  const [params, setParams] = useState({
-    limit: 9,
-    page: 1,
-    search: '',
-    sort: 'created_at',
-    sortBy: 'desc',
 
-  })
-  
-  const [searchInput, setSearchInput] = useState('');
-  const [selectedSort, setSelectedSort] = useState('');
-  const [selectedSortBy, setSelectedSortBy] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-
-
-  const getRecipe = async () => {
-
-    try {
-
-      setLoading(true);
-
-      const queryParams = new URLSearchParams({
-        limit: params.limit,
-        page: params.page,
-        ...(params.search ? { search: params.search } : {}),
-        ...(params.sort ? { sort: params.sort } : {}),
-        sortBy: params.sortBy,
-      });
-
-      const url = `${process.env.NEXT_PUBLIC_API}/v1/recipes?${queryParams.toString()}`;
-
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        // throw new Error('Login failed');
-        setError('Get recipes failed')
-        toast.error(error)
-        setLoading(false);
-        return
-      }
-
-      const res = await response.json();
-      setRecipe(res.data)
-
-      // toast.success(`Get recipes success`)
-      // console.log(res.data);
-
-
-    } catch (err) {
-
-      setError(err.message);
-      toast.error(error)
-
-    } finally {
-      setLoading(false);
-    }
-
-  }
-
+  const {
+    recipe,
+    params,
+    searchInput,
+    selectedSort,
+    selectedSortBy,
+    error,
+    loading,
+    setRecipe,
+    setParams,
+    setSearchInput,
+    setSelectedSort,
+    setSelectedSortBy,
+    setError,
+    setLoading,
+    getRecipe
+  } = useRecipeStore();
 
   useEffect(() => {
-    getRecipe()
-  }, [params])
+    getRecipe();
+  }, [params]);
 
-  const router = useRouter()
+  const router = useRouter();
   const handleNavigate = (id) => {
-    router.push(`/recipes/${id}`)
-
-  }
+    router.push(`/recipes/${id}`);
+  };
 
   const handlePrevious = () => {
-    setParams({
-      ...params,
-      page: params.page - 1
-    })
-  }
+    setParams({ page: params.page - 1 });
+  };
+
   const handleNext = () => {
-    setParams({
-      ...params,
-      page: params.page + 1
-    })
-  }
+    setParams({ page: params.page + 1 });
+  };
 
   const handleSearchInputChange = (e) => {
     setSearchInput(e.target.value);
-  }
+  };
 
   const handleSearch = () => {
-    if (searchInput === '') {
-      setParams({ ...params, search: null });
-    } else {
-      setParams({ ...params, search: searchInput, sort: selectedSort, sortBy: selectedSortBy });
-    }
-  }
+    setParams({ search: searchInput || '', sort: selectedSort, sortBy: selectedSortBy });
+  };
 
   const handleSortChange = (e) => {
     const selectedValue = e.target.value;
     setSelectedSort(selectedValue);
-    // setParams({ ...params, sort: selectedValue });
   };
 
   const handleSortByChange = (e) => {
     const selectedValue = e.target.value;
     setSelectedSortBy(selectedValue);
-    // setParams({ ...params, sort: selectedValue });
   };
+  
+  // const [recipe, setRecipe] = useState([])
+  // const [params, setParams] = useState({
+  //   limit: 9,
+  //   page: 1,
+  //   search: '',
+  //   sort: 'created_at',
+  //   sortBy: 'desc',
+
+  // })
+
+  // const [searchInput, setSearchInput] = useState('');
+  // const [selectedSort, setSelectedSort] = useState('');
+  // const [selectedSortBy, setSelectedSortBy] = useState('');
+  // const [error, setError] = useState('');
+  // const [loading, setLoading] = useState(false);
+
+
+  // const getRecipe = async () => {
+
+  //   try {
+
+  //     setLoading(true);
+
+  //     const queryParams = new URLSearchParams({
+  //       limit: params.limit,
+  //       page: params.page,
+  //       ...(params.search ? { search: params.search } : {}),
+  //       ...(params.sort ? { sort: params.sort } : {}),
+  //       sortBy: params.sortBy,
+  //     });
+
+  //     const url = `${process.env.NEXT_PUBLIC_API}/v1/recipes?${queryParams.toString()}`;
+
+  //     const response = await fetch(url, {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       }
+  //     });
+
+  //     if (!response.ok) {
+  //       // throw new Error('Login failed');
+  //       setError('Get recipes failed')
+  //       toast.error(error)
+  //       setLoading(false);
+  //       return
+  //     }
+
+  //     const res = await response.json();
+  //     setRecipe(res.data)
+
+  //     // toast.success(`Get recipes success`)
+  //     // console.log(res.data);
+
+
+  //   } catch (err) {
+
+  //     setError(err.message);
+  //     toast.error(error)
+
+  //   } finally {
+  //     setLoading(false);
+  //   }
+
+  // }
+
+
+  // useEffect(() => {
+  //   getRecipe()
+  // }, [params])
+
+  // const router = useRouter()
+  // const handleNavigate = (id) => {
+  //   router.push(`/recipes/${id}`)
+
+  // }
+
+  // const handlePrevious = () => {
+  //   setParams({
+  //     ...params,
+  //     page: params.page - 1
+  //   })
+  // }
+  // const handleNext = () => {
+  //   setParams({
+  //     ...params,
+  //     page: params.page + 1
+  //   })
+  // }
+
+  // const handleSearchInputChange = (e) => {
+  //   setSearchInput(e.target.value);
+  // }
+
+  // const handleSearch = () => {
+  //   if (searchInput === '') {
+  //     setParams({ ...params, search: null });
+  //   } else {
+  //     setParams({ ...params, search: searchInput, sort: selectedSort, sortBy: selectedSortBy });
+  //   }
+  // }
+
+  // const handleSortChange = (e) => {
+  //   const selectedValue = e.target.value;
+  //   setSelectedSort(selectedValue);
+  //   // setParams({ ...params, sort: selectedValue });
+  // };
+
+  // const handleSortByChange = (e) => {
+  //   const selectedValue = e.target.value;
+  //   setSelectedSortBy(selectedValue);
+  //   // setParams({ ...params, sort: selectedValue });
+  // };
 
   return (
     <div className='flex flex-col gap-16 p-24 pt-48 max-lg:p-4 max-lg:pt-32 max-lg:gap-6'>

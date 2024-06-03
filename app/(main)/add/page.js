@@ -120,7 +120,7 @@ const AddRecipe = () => {
             <input className='hidden' type="file" onChange={handleUpload} />
             {loading ? (<div className='flex flex-col gap-2 items-center justify-center'>
               <span className="loading loading-spinner text-black"></span>
-              <p className='font-medium text-sm text-black'>Uploading</p>
+              <p className='font-medium text-sm text-black'>Loading</p>
             </div>
             ) : form.image ? (<div className='hidden'></div>) :
               (<div className={`w-full flex flex-col gap-6 items-center`}>

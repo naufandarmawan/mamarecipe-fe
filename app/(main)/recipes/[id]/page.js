@@ -5,16 +5,20 @@ import Textarea from '@/components/base/textarea'
 import Button from '@/components/base/button'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+// import { getRecipeDetails } from '@/service/recipes'
 
 
 const RecipeDetails = ({ params }) => {
   const [recipeDetails, setRecipeDetails] = useState({})
+
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
   const [liked, setLiked] = useState(false);
   const [likeData, setLikeData] = useState({})
   const [saved, setSaved] = useState(false);
   const [saveData, setSaveData] = useState({})
+
   const router = useRouter()
 
   const getRecipeDetails = async () => {
@@ -57,7 +61,6 @@ const RecipeDetails = ({ params }) => {
   }
 
   useEffect(() => {
-    // getTalent()
     getRecipeDetails()
   }, [])
 
@@ -80,46 +83,47 @@ const RecipeDetails = ({ params }) => {
     }
   }
 
-  const handleUpdate = () => {
-    router.push(`/recipes/${params.id}/edit`)
-  }
+  // const handleUpdate = () => {
+  //   router.push(`/recipes/${params.id}/edit`)
+  // }
 
-  const handleDelete = async () => {
-    try {
+  // const handleDelete = async () => {
+  //   try {
 
-      setLoading(true);
+  //     setLoading(true);
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes/${params.id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
+  //     const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes/${params.id}`, {
+  //       method: 'DELETE',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       // credentials: 'include'
+  //     });
 
-      if (!response.ok) {
-        // throw new Error('Login failed');
-        setError('Delete recipe failed')
-        toast.error(error)
-        setLoading(false);
-        return
-      }
+  //     if (!response.ok) {
+  //       // throw new Error('Login failed');
+  //       setError('Delete recipe failed')
+  //       toast.error(error)
+  //       setLoading(false);
+  //       return
+  //     }
 
-      const res = await response.json();
-      setRecipeDetails(res.data)
+  //     const res = await response.json();
+  //     // setRecipeDetails(res.data)
 
-      toast.success(`Delete recipe success`)
-      console.log(res.data);
-      router.push('/recipes')
+  //     toast.success(`Delete recipe success`)
+  //     // console.log(res.data);
+  //     router.push('/recipes')
 
-    } catch (err) {
+  //   } catch (err) {
 
-      setError(err.message);
-      toast.error(error)
+  //     setError(err.message);
+  //     toast.error(error)
 
-    } finally {
-      setLoading(false);
-    }
-  }
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
 
   const likeRecipe = async () => {
     try {
@@ -229,30 +233,6 @@ const RecipeDetails = ({ params }) => {
     }
   }
 
-  // const handleLike = async () => {
-  //   try {
-  //     const response = await fetch(`/v1/recipes/like${liked ? `/${params.id}` : ''}`, {
-  //       method: liked ? 'DELETE' : 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: liked ? null : JSON.stringify({ recipe_id: params.id }),
-  //       credentials: 'include'
-  //     });
-
-
-  //     if (!response.ok) {
-  //       throw new Error(liked ? 'Cancel like recipe failed' : 'Like recipe failed');
-  //     }
-
-  //     setLiked(!liked);
-  //     toast.success(liked ? 'Recipe unliked' : 'Recipe liked');
-  //   } catch (err) {
-  //     setError(err.message);
-  //     toast.error(err.message);
-  //   }
-  // }
-
   return (
     <div className='p-24 pt-48 max-lg:p-4 max-lg:pt-32'>
       <div className='w-1/2 mx-auto flex flex-col gap-16 items-center max-lg:w-full'>
@@ -343,10 +323,10 @@ const RecipeDetails = ({ params }) => {
           </p>
         </div> */}
 
-        <div className='flex gap-2 w-full'>
+        {/* <div className='flex gap-2 w-full'>
           <Button text="Edit" className='btn !btn-outline btn-info bg-transparent' onClick={handleUpdate} />
           <Button text="Delete" className='btn !btn-outline btn-error bg-transparent' onClick={handleDelete} loading={loading} />
-        </div>
+        </div> */}
 
         <div className='w-full flex flex-col gap-4 items-center'>
 

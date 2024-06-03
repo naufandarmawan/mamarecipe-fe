@@ -17,7 +17,7 @@ const Login = () => {
   const [termsChecked, setTermsChecked] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   const validateEmail = (value) => {
     if (!value) {

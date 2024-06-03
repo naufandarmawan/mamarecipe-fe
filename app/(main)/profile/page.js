@@ -1,12 +1,13 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import Tabs from '@/components/base/tabs'
-import Dropdown from '@/components/base/dropdown'
+// import Tabs from '@/components/base/tabs'
+// import Dropdown from '@/components/base/dropdown'
 import Link from 'next/link'
 import Card from '@/components/base/card'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import Button from '@/components/base/button'
 
 const MyProfile = () => {
 
@@ -14,12 +15,12 @@ const MyProfile = () => {
   const [likedRecipe, setLikedRecipe] = useState([])
   const [savedRecipe, setSavedRecipe] = useState([])
 
+  const [myProfile, setMyProfile] = useState({})
+
   // const [params, setParams] = useState({
   //   limit: 80,
   //   page: 1,
   // })
-
-  const [myProfile, setMyProfile] = useState({})
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -230,6 +231,50 @@ const MyProfile = () => {
 
   }
 
+  const handleUpdate = (id) => {
+    router.push(`/recipes/${id}/edit`)
+  }
+
+  const handleDelete = async (id) => {
+    try {
+
+      setLoading(true);
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        // credentials: "include"
+      });
+
+      if (!response.ok) {
+        // throw new Error('Login failed');
+        setError('Delete recipe failed')
+        toast.error(error)
+        setLoading(false);
+        return
+      }
+
+      const res = await response.json();
+      // setRecipeDetails(res.data)
+
+      toast.success(`Delete recipe success`)
+      // console.log(res.data);
+      router.push('/recipes')
+
+    } catch (err) {
+
+      setError(err.message);
+      toast.error(error)
+
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  console.log(myRecipe);
+
   return (
     <div>
       <div className=' flex flex-col items-center justify-center p-24 pt-48 max-lg:p-4 max-lg:pt-32'>
@@ -297,12 +342,17 @@ const MyProfile = () => {
             ) : myRecipe.length > 0 ? (
               <>
                 {myRecipe.map((item) => (
-                  <Card
-                    key={item.id}
-                    image={item.image}
-                    title={item.title}
-                    onClick={() => handleNavigate(item.id)}
-                  />
+                  <div key={item.id} className='flex flex-col gap-2'>
+                    <Card
+                      image={item.image}
+                      title={item.title}
+                      onClick={() => handleNavigate(item.id)}
+                    />
+                    <div className='flex flex-col gap-2 w-full'>
+                      <Button text="Edit" className='btn !btn-outline btn-info bg-transparent' onClick={() => handleUpdate(item.id)} />
+                      <Button text="Delete" className='btn !btn-outline btn-error bg-transparent' onClick={() => handleDelete(item.id)} loading={loading} />
+                    </div>
+                  </div>
                 ))}
               </>
             ) : (
