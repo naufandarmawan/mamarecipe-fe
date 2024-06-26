@@ -1,87 +1,85 @@
-"use client"
+// "use client"
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Textarea from '@/components/base/textarea'
 import Button from '@/components/base/button'
-import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import LikeSave from '@/components/module/likesave'
+// import { useRouter } from 'next/navigation'
 // import { getRecipeDetails } from '@/service/recipes'
 
+const RecipeDetails = async ({ params }) => {
+  // const [recipeDetails, setRecipeDetails] = useState({})
 
-const RecipeDetails = ({ params }) => {
-  const [recipeDetails, setRecipeDetails] = useState({})
+  // const [error, setError] = useState('');
+  // const [loading, setLoading] = useState(false);
 
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  // const [liked, setLiked] = useState(false);
+  // const [likeData, setLikeData] = useState({})
+  // const [saved, setSaved] = useState(false);
+  // const [saveData, setSaveData] = useState({})
 
-  const [liked, setLiked] = useState(false);
-  const [likeData, setLikeData] = useState({})
-  const [saved, setSaved] = useState(false);
-  const [saveData, setSaveData] = useState({})
-
-  const router = useRouter()
+  // const router = useRouter()
 
   const getRecipeDetails = async () => {
 
     try {
 
-      setLoading(true);
+      // setLoading(true);
       // const token = localStorage.getItem('token');
 
-      const response = await fetch(`/v1/recipes/${params.id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes/${params.id}`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
+        cache: 'no-store'
       });
 
       if (!response.ok) {
         // throw new Error('Get recipe details failed');
-        setError('Get recipe details failed')
-        toast.error(error)
-        setLoading(false);
+        // setError('Get recipe details failed')
+        toast.error('Get recipe details failed')
+        // toast.error(error)
+        // setLoading(false);
         return
       }
 
       const res = await response.json();
+      return res
       // console.log(res.data);
-      setRecipeDetails(res.data)
+      // setRecipeDetails(res.data)
 
-      // toast.success(`Get recipes details success`)
+
       // console.log(res.data);
 
     } catch (err) {
 
-      setError(err.message);
-      toast.error(error)
+      return Promise.reject(err.message);
 
-    } finally {
-      setLoading(false);
     }
   }
 
-  useEffect(() => {
-    getRecipeDetails()
-  }, [])
+  const { data } = await getRecipeDetails()
 
-  const likeToggle = async () => {
-    // setLiked(!liked);
-    if (liked) {
-      await cancelLikeRecipe();
-    } else {
-      await likeRecipe();
-    }
+  // useEffect(() => {
+  //   getRecipeDetails()
+  // }, [])
 
-  }
+  // const likeToggle = async () => {
+  //   // setLiked(!liked);
+  //   if (liked) {
+  //     await cancelLikeRecipe();
+  //   } else {
+  //     await likeRecipe();
+  //   }
 
-  const saveToggle = async () => {
-    // setSaved(!saved);
-    if (saved) {
-      await cancelSaveRecipe();
-    } else {
-      await saveRecipe();
-    }
-  }
+  // }
+
+  // const saveToggle = async () => {
+  //   // setSaved(!saved);
+  //   if (saved) {
+  //     await cancelSaveRecipe();
+  //   } else {
+  //     await saveRecipe();
+  //   }
+  // }
 
   // const handleUpdate = () => {
   //   router.push(`/recipes/${params.id}/edit`)
@@ -125,125 +123,123 @@ const RecipeDetails = ({ params }) => {
   //   }
   // }
 
-  const likeRecipe = async () => {
-    try {
-      const response = await fetch(`/v1/recipes/like`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ recipe_id: `${params.id}` }),
-        credentials: 'include'
-      });
+  // const likeRecipe = async () => {
+  //   try {
+  //     const response = await fetch(`/v1/recipes/like`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({ recipe_id: `${params.id}` }),
+  //       credentials: 'include'
+  //     });
 
-      const result = await response.json();
-      console.log(result);
+  //     const result = await response.json();
+  //     console.log(result);
 
-      if (!response.ok) {
-        if (result.statuCode === 401) {
-          setLiked(!liked);
-          toast.warning('Recipe already liked');
-        } else {
-          throw new Error('Like recipe failed');
-        }
-      } else {
-        setLikeData(result.data)
-        setLiked(!liked);
-        toast.success('Recipe liked');
-      }
-    } catch (err) {
-      setError(err.message);
-      toast.error(err.message);
-    }
-  }
+  //     if (!response.ok) {
+  //       if (result.statuCode === 401) {
+  //         setLiked(!liked);
+  //         toast.warning('Recipe already liked');
+  //       } else {
+  //         throw new Error('Like recipe failed');
+  //       }
+  //     } else {
+  //       setLikeData(result.data)
+  //       setLiked(!liked);
+  //       toast.success('Recipe liked');
+  //     }
+  //   } catch (err) {
+  //     setError(err.message);
+  //     toast.error(err.message);
+  //   }
+  // }
 
-  const cancelLikeRecipe = async () => {
-    try {
-      const response = await fetch(`/v1/recipes/like/${likeData.id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-      });
+  // const cancelLikeRecipe = async () => {
+  //   try {
+  //     const response = await fetch(`/v1/recipes/like/${likeData.id}`, {
+  //       method: 'DELETE',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       credentials: 'include'
+  //     });
 
-      if (!response.ok) {
-        throw new Error('Cancel like recipe failed');
-      }
+  //     if (!response.ok) {
+  //       throw new Error('Cancel like recipe failed');
+  //     }
 
-      setLiked(false);
-      toast.success('Recipe unliked');
-    } catch (err) {
-      setError(err.message);
-      toast.error(err.message);
-    }
-  }
+  //     setLiked(false);
+  //     toast.success('Recipe unliked');
+  //   } catch (err) {
+  //     setError(err.message);
+  //     toast.error(err.message);
+  //   }
+  // }
 
-  const saveRecipe = async () => {
-    try {
-      const response = await fetch(`/v1/recipes/save`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ recipe_id: `${params.id}` }),
-        credentials: 'include'
-      });
+  // const saveRecipe = async () => {
+  //   try {
+  //     const response = await fetch(`/v1/recipes/save`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({ recipe_id: `${params.id}` }),
+  //       credentials: 'include'
+  //     });
 
-      const result = await response.json();
-      console.log(result);
+  //     const result = await response.json();
+  //     console.log(result);
 
-      if (!response.ok) {
-        if (result.statuCode === 401) {
-          setSaved(!saved);
-          toast.warning('Recipe already saved');
-        } else {
-          throw new Error('Save recipe failed');
-        }
-      } else {
-        setSaveData(result.data)
-        setSaved(!saved);
-        toast.success('Recipe saved');
-      }
-    } catch (err) {
-      setError(err.message);
-      toast.error(err.message);
-    }
-  }
+  //     if (!response.ok) {
+  //       if (result.statuCode === 401) {
+  //         setSaved(!saved);
+  //         toast.warning('Recipe already saved');
+  //       } else {
+  //         throw new Error('Save recipe failed');
+  //       }
+  //     } else {
+  //       setSaveData(result.data)
+  //       setSaved(!saved);
+  //       toast.success('Recipe saved');
+  //     }
+  //   } catch (err) {
+  //     setError(err.message);
+  //     toast.error(err.message);
+  //   }
+  // }
 
-  const cancelSaveRecipe = async () => {
-    try {
-      const response = await fetch(`/v1/recipes/save/${saveData.id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-      });
+  // const cancelSaveRecipe = async () => {
+  //   try {
+  //     const response = await fetch(`/v1/recipes/save/${saveData.id}`, {
+  //       method: 'DELETE',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       credentials: 'include'
+  //     });
 
-      if (!response.ok) {
-        throw new Error('Cancel save recipe failed');
-      }
+  //     if (!response.ok) {
+  //       throw new Error('Cancel save recipe failed');
+  //     }
 
-      setSaved(false);
-      toast.success('Recipe unsaved');
-    } catch (err) {
-      setError(err.message);
-      toast.error(err.message);
-    }
-  }
+  //     setSaved(false);
+  //     toast.success('Recipe unsaved');
+  //   } catch (err) {
+  //     setError(err.message);
+  //     toast.error(err.message);
+  //   }
+  // }
 
   return (
     <div className='p-24 pt-48 max-lg:p-4 max-lg:pt-32'>
       <div className='w-1/2 mx-auto flex flex-col gap-16 items-center max-lg:w-full'>
 
-        {loading ? (
-          <div className="skeleton w-full h-20"></div>
-        ) : (
-          <p className='font-medium text-7xl text-[#2E266F] text-center w-full'>{recipeDetails.title || "Title"}</p>
-        )}
+        <p className='font-medium text-7xl text-[#2E266F] text-center w-full'>{data.title || "Title"}</p>
 
-        <div className='w-full bg-cover flex justify-end items-end h-96 p-4 rounded-2xl gap-2' style={{
+        <LikeSave image={data.image} />
+
+        {/* <div className='w-full bg-cover flex justify-end items-end h-96 p-4 rounded-2xl gap-2' style={{
           backgroundImage: `url(${recipeDetails.image || '/recipe-thumbnail.png'})`
         }}>
 
@@ -285,28 +281,25 @@ const RecipeDetails = ({ params }) => {
             </svg>
           </button>
 
-        </div>
+        </div> */}
 
         <div className='w-full flex flex-col gap-8'>
           <p className='font-medium text-2xl text-[#3F3A3A]'>Ingridients</p>
-          {loading ? (
-            <div className="skeleton w-full h-20"></div>
-          ) : (
-            <div>
-              {recipeDetails.description ? (
-                recipeDetails.description.split('\n').map((line, index) => (
-                  <p key={index} className='font-normal text-xl text-black'>
-                    - {line}
-                  </p>
-                ))
-              ) : (
-                <p className='font-normal text-xl text-black'>Description</p>
-              )}
-            </div>
-            // <p className='font-normal text-xl text-black'>
-            //   {recipeDetails.description || "Description"}
-            // </p>
-          )}
+          <div>
+            {data.description ? (
+              data.description.split('\n').map((line, index) => (
+                <p key={index} className='font-normal text-xl text-black'>
+                  - {line}
+                </p>
+              ))
+            ) : (
+              <p className='font-normal text-xl text-black'>Description</p>
+            )}
+          </div>
+
+          {/* <p className='font-normal text-xl text-black'>
+            {recipeDetails.description || "Description"}
+          </p> */}
 
         </div>
 
