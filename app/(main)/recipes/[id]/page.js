@@ -237,7 +237,7 @@ const RecipeDetails = async ({ params }) => {
 
         <p className='font-medium text-7xl text-[#2E266F] text-center w-full'>{data.title || "Title"}</p>
 
-        <LikeSave image={data.image} />
+        <LikeSave image={data.image} params={params} />
 
         {/* <div className='w-full bg-cover flex justify-end items-end h-96 p-4 rounded-2xl gap-2' style={{
           backgroundImage: `url(${recipeDetails.image || '/recipe-thumbnail.png'})`

@@ -1,12 +1,14 @@
 "use client"
 
 import React, { useState } from 'react'
+import { toast } from 'sonner'
+import { getCookie } from "../../service/auth";
 
-const LikeSave = ({image}) => {
+
+const LikeSave = ({ image, params }) => {
+
     const [liked, setLiked] = useState(false);
-    const [likeData, setLikeData] = useState({})
     const [saved, setSaved] = useState(false);
-    const [saveData, setSaveData] = useState({})
 
     const likeToggle = async () => {
         // setLiked(!liked);
@@ -49,19 +51,18 @@ const LikeSave = ({image}) => {
                     throw new Error('Like recipe failed');
                 }
             } else {
-                setLikeData(result.data)
                 setLiked(!liked);
                 toast.success('Recipe liked');
             }
         } catch (err) {
-            setError(err.message);
             toast.error(err.message);
         }
     }
 
     const cancelLikeRecipe = async () => {
         try {
-            const response = await fetch(`/v1/recipes/like/${likeData.id}`, {
+
+            const response = await fetch(`/v1/recipes/like/${params.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -76,7 +77,6 @@ const LikeSave = ({image}) => {
             setLiked(false);
             toast.success('Recipe unliked');
         } catch (err) {
-            setError(err.message);
             toast.error(err.message);
         }
     }
@@ -103,19 +103,17 @@ const LikeSave = ({image}) => {
                     throw new Error('Save recipe failed');
                 }
             } else {
-                setSaveData(result.data)
                 setSaved(!saved);
                 toast.success('Recipe saved');
             }
         } catch (err) {
-            setError(err.message);
             toast.error(err.message);
         }
     }
 
     const cancelSaveRecipe = async () => {
         try {
-            const response = await fetch(`/v1/recipes/save/${saveData.id}`, {
+            const response = await fetch(`/v1/recipes/save/${params.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -130,7 +128,6 @@ const LikeSave = ({image}) => {
             setSaved(false);
             toast.success('Recipe unsaved');
         } catch (err) {
-            setError(err.message);
             toast.error(err.message);
         }
     }

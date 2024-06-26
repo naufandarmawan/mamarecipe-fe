@@ -232,7 +232,7 @@ const EditRecipe = () => {
           /> */}
         </div>
 
-        <Button text="Post" onClick={handleUpdate} className={'w-1/3 max-lg:w-1/2'} loading={loading} />
+        <Button text="Update" onClick={handleUpdate} className={'w-1/3 max-lg:w-1/2'} loading={loading} />
 
       </div>
 
