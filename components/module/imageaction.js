@@ -2,10 +2,9 @@
 
 import React, { useState } from 'react'
 import { toast } from 'sonner'
-import { getCookie } from "../../service/auth";
 
 
-const LikeSave = ({ image, params }) => {
+const ImageAction = ({ image, params }) => {
 
     const [liked, setLiked] = useState(false);
     const [saved, setSaved] = useState(false);
@@ -13,7 +12,7 @@ const LikeSave = ({ image, params }) => {
     const likeToggle = async () => {
         // setLiked(!liked);
         if (liked) {
-            await cancelLikeRecipe();
+            toast.warning('Recipe already liked');
         } else {
             await likeRecipe();
         }
@@ -23,7 +22,7 @@ const LikeSave = ({ image, params }) => {
     const saveToggle = async () => {
         // setSaved(!saved);
         if (saved) {
-            await cancelSaveRecipe();
+            toast.warning('Recipe already saved');
         } else {
             await saveRecipe();
         }
@@ -41,7 +40,6 @@ const LikeSave = ({ image, params }) => {
             });
 
             const result = await response.json();
-            console.log(result);
 
             if (!response.ok) {
                 if (result.statuCode === 401) {
@@ -59,28 +57,6 @@ const LikeSave = ({ image, params }) => {
         }
     }
 
-    const cancelLikeRecipe = async () => {
-        try {
-
-            const response = await fetch(`/v1/recipes/like/${params.id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include'
-            });
-
-            if (!response.ok) {
-                throw new Error('Cancel like recipe failed');
-            }
-
-            setLiked(false);
-            toast.success('Recipe unliked');
-        } catch (err) {
-            toast.error(err.message);
-        }
-    }
-
     const saveRecipe = async () => {
         try {
             const response = await fetch(`/v1/recipes/save`, {
@@ -93,7 +69,6 @@ const LikeSave = ({ image, params }) => {
             });
 
             const result = await response.json();
-            console.log(result);
 
             if (!response.ok) {
                 if (result.statuCode === 401) {
@@ -106,27 +81,6 @@ const LikeSave = ({ image, params }) => {
                 setSaved(!saved);
                 toast.success('Recipe saved');
             }
-        } catch (err) {
-            toast.error(err.message);
-        }
-    }
-
-    const cancelSaveRecipe = async () => {
-        try {
-            const response = await fetch(`/v1/recipes/save/${params.id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include'
-            });
-
-            if (!response.ok) {
-                throw new Error('Cancel save recipe failed');
-            }
-
-            setSaved(false);
-            toast.success('Recipe unsaved');
         } catch (err) {
             toast.error(err.message);
         }
@@ -179,4 +133,4 @@ const LikeSave = ({ image, params }) => {
     )
 }
 
-export default LikeSave
+export default ImageAction

@@ -149,7 +149,8 @@ const MyProfile = () => {
       const res = await response.json();
       // console.log(res);
 
-      const recipes = res.data.map(item => item.recipe);
+      // const recipes = res.data.map(item => item.recipe);
+      const recipes = res.data
       setLikedRecipe(recipes);
 
       // toast.success(`Get recipes success`)
@@ -200,7 +201,8 @@ const MyProfile = () => {
       const res = await response.json();
       // console.log(res);
 
-      const recipes = res.data.map(item => item.recipe);
+      // const recipes = res.data.map(item => item.recipe);
+      const recipes = res.data
       setSavedRecipe(recipes);
 
       // toast.success(`Get recipes success`)
@@ -273,7 +275,48 @@ const MyProfile = () => {
     }
   }
 
-  console.log(myRecipe);
+  const handleUnsave = async (id) => {
+    try {
+      const response = await fetch(`/v1/recipes/save/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error('Cancel save recipe failed');
+      }
+
+      toast.success('Recipe unsaved');
+      getSavedRecipe()
+    } catch (err) {
+      toast.error(err.message);
+    }
+  }
+
+  const handleUnlike = async (id) => {
+    try {
+      const response = await fetch(`/v1/recipes/like/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error('Cancel like recipe failed');
+      }
+
+      toast.success('Recipe unliked');
+      getLikedRecipe()
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
+    }
+  }
 
   return (
     <div>
@@ -372,13 +415,18 @@ const MyProfile = () => {
             ) : savedRecipe.length > 0 ? (
               <>
                 {savedRecipe.map((item) => (
-                  <Card
-                    key={item.id}
-                    image={item.image}
-                    title={item.title}
-                    onClick={() => handleNavigate(item.id)}
-                  />
+                  <div key={item.recipe.id} className='flex flex-col gap-2'>
+                    <Card
+                      image={item.recipe.image}
+                      title={item.recipe.title}
+                      onClick={() => handleNavigate(item.recipe.id)}
+                    />
+                    <div className='flex flex-col gap-2 w-full'>
+                      <Button text="Unsave" className='btn !btn-outline btn-error bg-transparent' onClick={() => handleUnsave(item.id)} loading={loading} />
+                    </div>
+                  </div>
                 ))}
+
               </>
             ) : (
               <p>No recipes found.</p>
@@ -397,12 +445,16 @@ const MyProfile = () => {
             ) : likedRecipe.length > 0 ? (
               <>
                 {likedRecipe.map((item) => (
-                  <Card
-                    key={item.id}
-                    image={item.image}
-                    title={item.title}
-                    onClick={() => handleNavigate(item.id)}
-                  />
+                  <div key={item.recipe.id} className='flex flex-col gap-2'>
+                    <Card
+                      image={item.recipe.image}
+                      title={item.recipe.title}
+                      onClick={() => handleNavigate(item.recipe.id)}
+                    />
+                    <div className='flex flex-col gap-2 w-full'>
+                      <Button text="Unlike" className='btn !btn-outline btn-error bg-transparent' onClick={() => handleUnlike(item.id)} loading={loading} />
+                    </div>
+                  </div>
                 ))}
               </>
             ) : (

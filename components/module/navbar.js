@@ -20,7 +20,7 @@ const Navbar = () => {
             const token = await getCookie('token');
             // console.log('navbar:', token);
 
-            // console.log(token);
+            console.log(token);
 
             if (token) {
                 setIsLoggedIn(true);

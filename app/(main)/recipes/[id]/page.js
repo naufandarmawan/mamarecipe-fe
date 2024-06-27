@@ -3,7 +3,7 @@
 import React from 'react'
 import Textarea from '@/components/base/textarea'
 import Button from '@/components/base/button'
-import LikeSave from '@/components/module/likesave'
+import ImageAction from '@/components/module/imageaction'
 // import { useRouter } from 'next/navigation'
 // import { getRecipeDetails } from '@/service/recipes'
 
@@ -42,6 +42,7 @@ const RecipeDetails = async ({ params }) => {
       }
 
       const res = await response.json();
+      console.log(res);
       return res
       // console.log(res.data);
       // setRecipeDetails(res.data)
@@ -237,7 +238,7 @@ const RecipeDetails = async ({ params }) => {
 
         <p className='font-medium text-7xl text-[#2E266F] text-center w-full'>{data.title || "Title"}</p>
 
-        <LikeSave image={data.image} params={params} />
+        <ImageAction image={data.image} params={params} />
 
         {/* <div className='w-full bg-cover flex justify-end items-end h-96 p-4 rounded-2xl gap-2' style={{
           backgroundImage: `url(${recipeDetails.image || '/recipe-thumbnail.png'})`
