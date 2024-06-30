@@ -55,34 +55,27 @@ const Navbar = () => {
     };
 
     const handleLogout = async () => {
-        const logout = async () => {
-            try {
-                const response = await fetch(`/v1/auth/logout`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'include'
-                });
+        try {
+            const response = await fetch('/api/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            });
 
-                if (!response.ok) {
-                    throw new Error('Logout failed')
-                }
-
-                const result = await response.json();
-
-                return result
-
-            } catch (err) {
-                return Promise.reject(err.message);
+            if (!response.ok) {
+                throw new Error('Logout failed');
             }
+
+            const result = await response.json();
+            toast.success(result.message);
+            setIsLoggedIn(false);
+            router.push('/');
+        } catch (error) {
+            console.error('Logout failed', error);
+            toast.error('Logout failed');
         }
-
-        const result = await logout()
-
-        toast.success(result.message)
-        setIsLoggedIn(false);
-
     };
 
     return (
