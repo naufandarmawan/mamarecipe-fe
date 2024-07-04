@@ -166,9 +166,9 @@ const Home = async () => {
           </div>
 
           <div className='w-1/2 flex flex-col gap-8 px-24 justify-center max-lg:p-4 max-lg:w-full'>
-            <p className='font-medium text-6xl text-[#3F3A3A] max-lg:text-4xl'>Healthy Bone Broth Ramen (Quick & Easy)</p>
+            <p className='font-medium text-6xl text-[#3F3A3A] max-lg:text-4xl'>Most Popular Recipes Just for You!</p>
             <div className='w-28 h-[1px] bg-yellow-900'></div>
-            <p className='font-medium text-2xl text-[#3F3A3A] max-lg:text-xl'>Quick + Easy Chicken Bone Broth Ramen- Healthy chicken ramen in a hurry? That’s right!</p>
+            <p className='font-medium text-2xl text-[#3F3A3A] max-lg:text-xl'>This quick and easy dish is perfect for a healthy and delicious meal in no time! With rich flavors and nutritious ingredients, it's a popular choice for a reason.</p>
             <Link href='/recipes'>
               <Button
                 text='Learn More'
@@ -195,9 +195,9 @@ const Home = async () => {
           </div>
 
           <div className='w-1/2 flex flex-col gap-8 px-24 justify-center max-lg:p-4 max-lg:w-full'>
-            <p className='font-medium text-6xl text-[#3F3A3A] max-lg:text-4xl'>Healthy Bone Broth Ramen (Quick & Easy)</p>
+            <p className='font-medium text-6xl text-[#3F3A3A] max-lg:text-4xl'>Discover Our Latest Recipes</p>
             <div className='w-28 h-[1px] bg-yellow-900'></div>
-            <p className='font-medium text-2xl text-[#3F3A3A] max-lg:text-xl'>Quick + Easy Chicken Bone Broth Ramen- Healthy chicken ramen in a hurry? That’s right!</p>
+            <p className='font-medium text-2xl text-[#3F3A3A] max-lg:text-xl'>Try our newest recipe - It's a perfect blend of taste and health, making it an ideal choice for a quick meal.</p>
             <Link href='/recipes'>
               <Button
                 text='Learn More'

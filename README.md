@@ -1,72 +1,282 @@
-# Mama Recipe
+<a id="readme-top"></a>
 
-## Project Description
-Mama Recipe is a dynamic recipe website designed to provide users with a wide array of delicious recipes. The website allows users to browse, search, and manage recipes seamlessly. It is built using modern web technologies to ensure a responsive, user-friendly experience. The project follows the design and integration requirements provided by the bootcamp, focusing on Next.js, server-side rendering (SSR), client-side rendering (CSR), and other essential features.
+<br />
+<div align="center">
+  <a href="https://github.com/naufandarmawan/mamarecipe-fe">
+    <img src="public/logo.svg" alt="Logo" width="200" height="auto">
+  </a>
 
-## Pages Designed
-1. **Home Page**
-   - Overview of popular and recent recipes
-   - Navigation to various sections of the website
+  <h3 align="center">MamaRecipe</h3>
+  <p align="center">
+    Recipe Sharing Platform (Web Application) 
+  </p>
+</div>
 
-2. **Recipe List Page**
-   - Displays a list of recipes with options to search, sort, and paginate
-   - Allows users to filter recipes based on categories or ingredients
 
-3. **Recipe Detail Page**
-   - Provides detailed information about a selected recipe
-   - Includes ingredients, steps, and user comments
 
-4. **Add/Edit Recipe Page**
-   - Form to add a new recipe or edit an existing one
-   - Supports CRUD operations (Create, Read, Update, Delete)
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#screenshots">Screeshots</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#development">Development</a></li>
+        <li><a href="#production">Production</a></li>
+      </ul>
+    </li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#related-projects">Related Projects</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+</details>
 
-5. **User Authentication Pages (Optional)**
-   - Sign-up and login pages for user authentication
-   - Allows users to manage their own recipes and save favorites
 
-6. **Responsive Design**
-   - Ensures compatibility across various devices, including desktops, tablets, and mobile phones
 
-## Implemented Technology
-- **Next.js**
-  - Utilized for its powerful features including server-side rendering (SSR) and client-side rendering (CSR) to enhance performance and SEO.
-  
-- **UI Design**
-  - Designed based on the Figma mockup provided, ensuring a professional and user-friendly interface.
-  
-- **Next Components**
-  - Built reusable components for various parts of the website such as headers, footers, recipe cards, and forms.
+## About The Project
 
-- **Navigation**
-  - Implemented smooth and intuitive navigation across different pages using Next.js routing.
+Inspired by a 3,300% increase in Google searches for food menu inspiration in Indonesia over the past five years, MamaRecipe is a recipe-sharing platform that allows users to search, sort, and share recipes. This project aims to provide users with an accessible and interactive culinary resource.
 
-- **CRUD Operations**
-  - Enabled users to create, read, update, and delete recipes, providing full control over recipe management.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-- **Authentication (Optional)**
-  - Integrated user authentication for secure access to personalized features.
 
-- **Search, Sort, Pagination**
-  - Implemented search functionality to find recipes quickly.
-  - Added sorting options to organize recipes based on different criteria.
-  - Integrated pagination to handle large sets of recipes efficiently.
 
-- **Responsive Design**
-  - Ensured the website is fully responsive and adapts to various screen sizes.
+### Built With
 
-- **Environment Variables**
-  - Managed sensitive information and configuration settings using environment variables.
+* Next.js
+* DaisyUI
+* Tailwind CSS
+* Zustand
+* Jest
+* Vercel
 
-- **Reusable Components**
-  - Created modular and reusable components to streamline development and maintainability.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-- **Redux (Optional)**
-  - Integrated Redux for state management where necessary to handle complex state interactions.
 
-- **Deployment**
-  - Deployed the website to a cloud platform ensuring it is accessible online.
 
-## How to Run the Project
+## Features
+
+* Account creation
+* Search and view recipe details
+* Like and save recipes
+* Create, edit, and delete recipes,
+* Edit user profiles.
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+## Screenshots
+
+<table style="width: 100%; border-collapse: collapse;">
+  <colgroup>
+    <col style="width: 33.33%;">
+    <col style="width: 33.33%;">
+    <col style="width: 33.33%;">
+  </colgroup>
+  <tr>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Landing Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Login Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Register Page</th>
+  </tr>
+  <tr>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="public/screenshot-3.png" alt="Screenshot 1" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="public/screenshot-4.png" alt="Screenshot 2" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="public/screenshot-5.png" alt="Screenshot 3" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Search Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Add Recipe Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Recipe Details Page</th>
+  </tr>
+  <tr>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="public/screenshot-6.png" alt="Screenshot 1" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="public/screenshot-7.png" alt="Screenshot 2" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="public/screenshot-8.png" alt="Screenshot 3" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Saved Recipe Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Liked Recipe Page</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Edit Recipe Page</th>
+  </tr>
+  <tr>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="public/screenshot-1.png" alt="Screenshot 1" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="public/screenshot-2.png" alt="Screenshot 2" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;">
+      <div style="width: 100%; height: 300px; overflow: hidden;">
+        <img src="public/screenshot-9.png" alt="Screenshot 3" style="width: 100%; height: 100%; object-fit: cover; object-position: top;">
+      </div>
+    </td>
+  </tr>
+  <!-- Repeat similar rows for more screenshots -->
+</table>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+## Getting Started
+
+To set up and run the project locally, follow these steps:
+
+### Prerequisites
+
+Before starting, make sure you have npm installed. You can install it globally using:
+
+* npm
+  ```sh
+  npm install npm@latest -g
+  ```
+
+### Installation
+
 1. Clone the repository:
-   ```bash
+   ```sh
    git clone https://github.com/naufandarmawan/mamarecipe-fe.git
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Set up environment variables:
+   * Create a `.env` file in the root directory of your project.
+   * Add your API key to the `.env` file:
+   ```js
+   NEXT_PUBLIC_API = 'ENTER YOUR API';
+   ```
+   * Replace 'ENTER YOUR API KEY HERE' with your actual API key.
+
+### Development
+
+4. Start the development server:
+   ```sh
+   npm run dev
+   ```
+
+### Production
+
+5. Build the project:
+   ```sh
+   npm run build
+   ```
+6. Start the production server:
+   ```sh
+   npm run start
+   ```
+
+By following these steps, you'll have everything set up to run the project locally on your machine.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+## Related Projects
+
+Here are some related projects and resources you may find helpful. These include demo links, backend links, and other projects from my portfolio:
+
+* MamaRecipe Demo: [MamaRecipe Demo](https://mamarecipe-fe-naufan.vercel.app/)
+* MamaRecipe Backend: [MamaRecipe Backend](https://github.com/naufandarmawan/mamarecipe-be)
+
+### My Other Portfolios
+
+<table style="width: 100%; border-collapse: collapse;">
+<colgroup>
+    <col style="width: 33.33%;">
+    <col style="width: 33.33%;">
+    <col style="width: 33.33%;">
+  </colgroup>
+  <tr>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Peworld Web App</th>
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Peworld Mobile App</th>
+    <!-- <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">MamaRecipe Web App</th> -->
+    <th style="padding: 8px; text-align: center; border: 1px solid #ddd;">Blanja Web App</th>
+  </tr>
+  <tr>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;"><a href="https://github.com/naufandarmawan/peworld-fe"><img src="public/other-portfolio-1.png" alt="Screenshot 1" style="max-width: 100%; height: auto;"></a></td>
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;"><a href="https://github.com/naufandarmawan/peworld-mobile"><img src="public/other-portfolio-4.png" alt="Screenshot 2" style="max-width: 100%; height: auto;"></a></td>
+    <!-- <td style="padding: 8px; text-align: left; border: 1px solid #ddd;"><a href="https://github.com/naufandarmawan/mamarecipe-fe"><img src="public/other-portfolio-2.png" alt="Screenshot 3" style="max-width: 100%; height: auto;"></a></td> -->
+    <td style="padding: 8px; text-align: left; border: 1px solid #ddd;"><a href="https://github.com/naufandarmawan/blanja-fe"><img src="public/other-portfolio-3.png" alt="Screenshot 4" style="max-width: 100%; height: auto;"></a></td>
+  </tr>
+  <!-- Repeat similar rows for more screenshots -->
+</table>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+-----
+
+
+<p align="center" id="contact">© MamaRecipe 2024</p>
+<p align="center">
+<a href="https://github.com/naufandarmawan/"> Naufan Darmawan </a> - <a href="mailto:naufandarmawan@gmail.com">naufandarmawan@gmail.com</a> - <a href="https://www.linkedin.com/in/naufandarmawan/">LinkedIn</a>
+</p>
