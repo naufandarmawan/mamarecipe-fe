@@ -89,7 +89,7 @@ const Home = async () => {
   const getRecipeHome = async () => {
     try {
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes?limit=6&sort=created_at&sortBy=asc`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/v1/recipes?page=4&limit=6&sort=created_at&sortBy=desc`, {
         method: 'GET',
         cache: 'force-cache'
 
