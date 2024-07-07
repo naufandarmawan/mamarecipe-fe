@@ -64,7 +64,7 @@ Inspired by a 3,300% increase in Google searches for food menu inspiration in In
 
 
 
-## Features
+### Features
 
 * Account creation
 * Search and view recipe details
@@ -77,7 +77,7 @@ Inspired by a 3,300% increase in Google searches for food menu inspiration in In
 
 
 
-## Screenshots
+### Screenshots
 
 <table style="width: 100%; border-collapse: collapse;">
   <colgroup>
@@ -177,11 +177,15 @@ Before starting, make sure you have npm installed. You can install it globally u
    ```sh
    git clone https://github.com/naufandarmawan/mamarecipe-fe.git
    ```
-2. Install dependencies:
+2. Navigate into the project directory:
+   ```sh
+   cd mamarecipe-fe
+   ```
+3. Install dependencies:
    ```sh
    npm install
    ```
-3. Set up environment variables:
+4. Set up environment variables:
    * Create a `.env` file in the root directory of your project.
    * Add your API key to the `.env` file:
    ```js
@@ -191,18 +195,18 @@ Before starting, make sure you have npm installed. You can install it globally u
 
 ### Development
 
-4. Start the development server:
+5. Start the development server:
    ```sh
    npm run dev
    ```
 
 ### Production
 
-5. Build the project:
+6. Build the project:
    ```sh
    npm run build
    ```
-6. Start the production server:
+7. Start the production server:
    ```sh
    npm run start
    ```
@@ -267,7 +271,7 @@ Here are some related projects and resources you may find helpful. These include
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See <a href="https://github.com/naufandarmawan/mamarecipe-fe/blob/main/LICENSE">`LICENSE`</a> for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
