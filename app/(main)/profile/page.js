@@ -320,7 +320,7 @@ const MyProfile = () => {
 
   return (
     <div>
-      <div className=' flex flex-col items-center justify-center p-24 pt-48 max-lg:p-4 max-lg:pt-32'>
+      <div className=' flex flex-col items-center justify-center p-12 pt-36 max-lg:p-4 max-lg:pt-32'>
 
         <div className='flex flex-col gap-10'>
 
@@ -346,7 +346,7 @@ const MyProfile = () => {
 
       {/* <Tabs /> */}
 
-      <div className='flex flex-col gap-8 py-24 max-lg:py-8'>
+      <div className='flex flex-col gap-8 py-12 max-lg:py-8'>
         <div role="tablist" className="tabs w-fit px-24 max-lg:px-4">
           <a
             role="tab"
